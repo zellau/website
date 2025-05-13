@@ -1,0 +1,82 @@
+<html>
+	<head>
+		<script type="text/javascript">
+			
+			function show(e){
+				// console.log(this.getAttribute("id").split(" ")[1]);
+				var elts = document.getElementsByClassName(this.getAttribute("id").split(" ")[1])
+				console.log(this.getAttribute("id").split(" ")[1]);
+				for (var i=0; i<elts.length; i++){
+					if ((hasClass(elts[i],"area") && hasClass(this,"area")) || (hasClass(elts[i],"mobile") && hasClass(this,"mobile"))
+					|| (hasClass(elts[i],"point") && hasClass(this,"point")) ||(hasClass(elts[i],"nonroad") && hasClass(this,"nonroad"))){
+						elts[i].style.visibility = "visible";
+					}
+				}
+			}
+	
+			function hide(e){
+				console.log(document.getElementById(this.getAttribute("id").split(" ")[1]));
+				var elts = document.getElementsByClassName(this.getAttribute("id").split(" ")[1]);
+				console.log(hasClass(this,"mobile"));
+				for (var i=0; i<elts.length; i++){
+					if ((hasClass(elts[i],"area") && hasClass(this,"area")) || (hasClass(elts[i],"mobile") && hasClass(this,"mobile"))
+					|| (hasClass(elts[i],"point") && hasClass(this,"point")) ||(hasClass(elts[i],"nonroad") && hasClass(this,"nonroad"))){
+						elts[i].style.visibility = "hidden";
+					}
+				}
+			}
+			
+			function hasClass(element, cls) {
+    			return element.className.baseVal.split(" ").indexOf(cls) > -1;
+			}
+		</script>
+		<script type="text/javascript" src="UDAQ.js"></script>
+		<link rel="stylesheet" type="text/css" href="UDAQ.css" />
+		<script type="text/javascript" src="d3/d3.min.js"></script>
+		<!-- <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+		<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>-->
+	</head>
+	
+	<body>
+		<div class="top-select-variables">
+			<div class="variable-title-div">
+				<p class="variable-title">County</p>
+				<hr>
+				<div class="dropdown">
+					<div id="selected-county" class="dropdown-header">Select County</div>
+					
+					<ul id="county-selector"></ul>
+				</div>
+				<!-- <select id="county-selector" class="styled-select"></select>-->
+			</div>
+			
+			<div class="variable-title-div">
+				<p class="variable-title">Pollutant</p>
+				<hr>
+				<div class="dropdown">
+					<div id="selected-pollutant" class="dropdown-header">Select Pollutant</div>
+					
+					<ul id="pollutant-selector"></ul>
+				</div>
+			</div>
+			
+			<div class="variable-title-div sources" width="200px">
+				<p class="variable-title">Types of Sources</p>
+				<hr>
+				<div class="source-select">
+					<input id="point-button" class="source" type="image" src="image-point.png">
+					<div class="vr"></div>
+					<input id="area-button" class="source right" type="image" src="image-area.png">
+					<hr>
+					<input id="mobile-button" class="source" type="image" src="image-mobile.png">
+					<input id="non-road-button" class="source right" type="image" src="image-non-road.png">
+				</div>
+			</div>
+			
+		</div>
+		
+		<svg id="canvas"></svg>
+	
+	</body>
+
+</html>

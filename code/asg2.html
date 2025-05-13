@@ -1,0 +1,58 @@
+<html>
+
+<script id="vertex-shader" type="x-shader/x-vertex">
+
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+attribute vec4 vCol;
+
+uniform bool interp;
+uniform mat4 modelView;
+
+varying vec4 fColor;
+
+attribute vec3 vtrans;
+
+void main() 
+{
+	if (interp){
+	    fColor = vColor;
+	} else {
+	    fColor = vCol;
+	}
+    gl_Position =  modelView * vPosition;
+} 
+</script>
+
+<script id="fragment-shader" type="x-shader/x-fragment">
+
+precision mediump float;
+   
+varying vec4 fColor;
+
+void
+main()
+{
+    gl_FragColor = fColor;
+}
+</script>
+
+<script type="text/javascript" src="Common/webgl-utils.js"></script>
+<script type="text/javascript" src="Common/initShaders.js"></script>
+<script type="text/javascript" src="Common/MV.js"></script>
+<script type="text/javascript" src="asg2.js"></script>
+
+<body>
+<canvas id="gl-canvas" width="512"" height="512">
+Oops ... your browser doesn't support the HTML5 canvas element
+</canvas>
+   
+<br/>
+
+<div> Speed: slow<input id="speed" type="range"
+	min="0.0" max="6.0" step="1.0" value="0" />
+fast </div>
+<button id= "anim">Toggle Animation</button>
+
+</body>
+</html>

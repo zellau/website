@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">
+<script id="vertex-shader" type="x-shader/x-vertex">
+
+attribute vec4 vPosition;
+attribute vec4 color;
+varying vec4 fcolor;
+
+uniform float theta;
+
+void main()
+{	
+	fcolor=color;
+
+	float x = vPosition.x;
+	float y = vPosition.y;
+	float R = (sqrt(x*x+y*y));
+	float sintheta = sin(R*theta/360.0*2.0*3.14159);
+	float costheta = cos(R*theta/360.0*2.0*3.14159);
+	gl_Position.x = x*costheta - y*sintheta;
+	gl_Position.y = x*sintheta+y*costheta;
+	gl_Position.z = 0.0;
+	gl_Position.w = 1.0;
+}
+</script>
+
+<script id="fragment-shader" type="x-shader/x-fragment">
+
+precision mediump float;
+vec3 vVertexPosition;
+varying vec4 fcolor;
+float vertices[3];
+
+void main()
+{
+		gl_FragColor = fcolor;
+	
+}
+</script>
+
+
+<script type="text/javascript" src="Common/webgl-utils.js"></script>
+<script type="text/javascript" src="Common/initShaders.js"></script>
+<script type="text/javascript" src="Common/MV.js"></script>
+<script type="text/javascript" src="asg1.js"></script>
+</head>
+
+<body>
+<canvas id="gl-canvas" width="512" height="512" > 
+Oops ... your browser doesn't support the HTML5 canvas element
+</canvas>
+
+
+<div>
+Theta: <input id="theta" type="range"
+	min="0" max="360" step="10" value="0" />
+<span id="ttext">0</span> </div>
+
+<div>
+Subdivide: <input id="subdivide" type="range"
+	min="0" max="6" step="1" value="0" />
+<span id="subtext">0</span> </div>
+
+<div>
+Spiral?: <input id="spiraly" type="radio"
+	name="spiral" value="true" checked> yes </input>
+	<input id="spiraln" type="radio"
+	name="spiral" value="false"> no </input>
+</div>
+
+<select id="menu">
+<option value="0">Triangle</option>
+<option value="1">Square</option>
+</select>
+
+</body>
+</html>
