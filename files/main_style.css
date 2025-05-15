@@ -69,7 +69,7 @@
  .wsite-social-youtube {background-position:-230px 0;}
  .wsite-social-youtube:hover {background-position:-230px -23px;}
  .wsite-social-youtube:active {background-position:-230px -46px;}
- #header-right .wsite-social { display:block; vertical-align: middle; margin-left:10px ; width:150px; }
+ #header-right .wsite-social { display:block; text-align:right; vertical-align: middle; margin-left:10px ; width:300px; }
  #nav-wrap {position:absolute; top:0;}
  #nav-wrap .nav-container { float:right; position:relative; left:-50%; text-align:left; margin-top:30px; z-index:2; }
  #nav-wrap .nav-container ul{ list-style:none; position:relative; left:50%; z-index:2; }
