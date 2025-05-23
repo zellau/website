@@ -18,6 +18,14 @@
       $(function(){
         $("#headerFile").load("../_header.html"); 
       });
+    </script>
+    <script> 
+      $(function(){
+        $(".song").each(function(){
+          $title = $(this).attr('id');
+          $(this).load($title+".html");
+        });
+      });
     </script> 
   </head>
   <body>
@@ -27,36 +35,48 @@
         <ul>
         <li><a href="#failure">Failure</a></li>
         <li><a href="#hallelujah">Hallelujah</a></li>
-        <li><a href ="#cant-help">I Can't Help Falling in Love with You</a></li>
-        <li><a href ="#book-of-love">The Book of Love</a></li>
+        <li><a href ="#canthelp">I Can't Help Falling in Love with You</a></li>
+        <li><a href ="#bookoflove">The Book of Love</a></li>
         <li><a href ="#irony">Irony</a></li>
         <li><a href ="#moth-love-song">Moth Love Song</a></li>
-        <li><a href ="#injection">Injection</a></li>
-        <li><a href ="#without-you">Without You</a></li>
-        <li><a href ="#welcome-to-my-life">Welcome to My Life</a></li>
-        <li><a href ="#mexican-wrestler">Mexican Wrestler Song</a></li>
+        <!--<li><a href ="#injection">Injection</a></li>
+        <li><a href ="#withoutyou">Without You</a></li>
+        <li><a href ="#welcometomylife">Welcome to My Life</a></li>
+        <li><a href ="#mexican-wrestler">Mexican Wrestler Song</a></li>-->
         <li><a href ="#demons">Demons</a></li>
-        <li><a href ="#breaking-strain">Hymn to Breaking Strain</a></li>
-        <li><a href ="#over">Over</a></li>
+        <li><a href ="#breakingstrain">Hymn to Breaking Strain</a></li>
+        <!--<li><a href ="#over">Over</a></li>
         <li><a href ="#8r8k">8r8k</a></li>
         <li><a href ="#t1ck-t0ck">T1ck T0ck</a></li>
         <li><a href ="#temporal-shenanigans">Temporal Shenanigans</a></li>
         <li><a href ="#what-ive-done">What I've Done</a></li>
-        <li><a href ="#monster">Monster</a></li>
-        <li><a href ="#bold-orion">Bold Orion</a></li>
-        <li><a href ="#wayward-son">Carry On Wayward Son</a></li>
-        <li><a href ="#never-be-the-same">Never Be the Same</a></li>
+        <li><a href ="#monster">Monster</a></li>-->
+        <li><a href ="#boldorion">Bold Orion</a></li>
+        <li><a href ="#carryon">Carry On Wayward Son</a></li>
+        <!--<li><a href ="#never-be-the-same">Never Be the Same</a></li>
         <li><a href ="#hobos-lullaby">Hobo's Lullaby</a></li>
-        <li><a href ="#escapist">Escapist</a></li>
-        <li><a href ="#come-back-to-me">Come Back to Me</a></li>
-        <li><a href ="#light-ship">The Light-Ship</a></li>
-        <li><a href ="#close-to-heaven">Close to Heaven</a></li>
-        <li><a href ="#untitled">Untitled (How Could This Happen to Me)</a></li>
+        <li><a href ="#escapist">Escapist</a></li>-->
+        <li><a href ="#comeback">Come Back to Me</a></li>
+        <!--<li><a href ="#light-ship">The Light-Ship</a></li>-->
+        <li><a href ="#closetoheaven">Close to Heaven</a></li>
+        <!--<li><a href ="#untitled">Untitled (How Could This Happen to Me)</a></li>
         <li><a href ="#fairytale">Fairytale</a></li>
         <li><a href ="#fire-in-the-sky">Fire in the Sky</a></li>
-        <li><a href ="#dog-in-a-trenchcoat">Dog in a Trenchcoat</a></li>
+        <li><a href ="#dog-in-a-trenchcoat">Dog in a Trenchcoat</a></li>-->
         </ul>
         <br />
+        <div class="song" id="failure"></div>
+        <div class="song" id="hallelujah"></div>
+        <div class="song" id="canthelp"></div>
+        <div class="song" id="bookoflove"></div>
+        <div class="song" id="irony"></div>
+        <div class="song" id="demons"></div>
+        <div class="song" id="breakingstrain"></div>
+        <div class="song" id="boldorion"></div>
+        <div class="song" id="carryon"></div>
+        <div class="song" id="demons"></div>
+        <div class="song" id="comeback"></div>
+        <div class="song" id="closetoheaven"></div>
         <br />
         <br />
         <br />
