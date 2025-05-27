@@ -13,35 +13,35 @@
       .container { padding-left:50; }
       .song { display:none; }
       li { display:none; }
-      .song-filter:has(option[value="all"]:checked) ~ ul li { display:list-item; }
-      .song-filter:has(option[value="all"]:checked) ~ .song { display:inherit; }
+      #song-filter:has(option[value="all"]:checked) ~ ul li { display:list-item; }
+      #song-filter:has(option[value="all"]:checked) ~ .song { display:inherit; }
 
-      .song-filter:has(option[value="love-song"]:checked) ~ .love-song { display:inherit; }
-      .song-filter:has(option[value="love-song"]:checked) ~ ul li.love-song { display:list-item; }
+      #song-filter:has(option[value="love-song"]:checked) ~ .love-song { display:inherit; }
+      #song-filter:has(option[value="love-song"]:checked) ~ ul li.love-song { display:list-item; }
 
-      .song-filter:has(option[value="breakup-song"]:checked) ~ .breakup-song { display:inherit; }
-      .song-filter:has(option[value="breakup-song"]:checked) ~ ul li.breakup-song { display:list-item; }
+      #song-filter:has(option[value="breakup-song"]:checked) ~ .breakup-song { display:inherit; }
+      #song-filter:has(option[value="breakup-song"]:checked) ~ ul li.breakup-song { display:list-item; }
 
-      .song-filter:has(option[value="blue-song"]:checked) ~ .blue-song { display:inherit; }
-      .song-filter:has(option[value="blue-song"]:checked) ~ ul li.blue-song { display:list-item; }
+      #song-filter:has(option[value="blue-song"]:checked) ~ .blue-song { display:inherit; }
+      #song-filter:has(option[value="blue-song"]:checked) ~ ul li.blue-song { display:list-item; }
 
-      .song-filter:has(option[value="homestuck-song"]:checked) ~ .homestuck-song { display:inherit; }
-      .song-filter:has(option[value="homestuck-song"]:checked) ~ ul li.homestuck-song { display:list-item; }
+      #song-filter:has(option[value="homestuck-song"]:checked) ~ .homestuck-song { display:inherit; }
+      #song-filter:has(option[value="homestuck-song"]:checked) ~ ul li.homestuck-song { display:list-item; }
 
-      .song-filter:has(option[value="fandom-song"]:checked) ~ .fandom-song { display:inherit; }
-      .song-filter:has(option[value="fandom-song"]:checked) ~ ul li.fandom-song { display:list-item; }
+      #song-filter:has(option[value="fandom-song"]:checked) ~ .fandom-song { display:inherit; }
+      #song-filter:has(option[value="fandom-song"]:checked) ~ ul li.fandom-song { display:list-item; }
 
-      .song-filter:has(option[value="space-song"]:checked) ~ .space-song { display:inherit; }
-      .song-filter:has(option[value="space-song"]:checked) ~ ul li.space-song { display:list-item; }
+      #song-filter:has(option[value="space-song"]:checked) ~ .space-song { display:inherit; }
+      #song-filter:has(option[value="space-song"]:checked) ~ ul li.space-song { display:list-item; }
 
-      .song-filter:has(option[value="mlp-song"]:checked) ~ .mlp-song { display:inherit; }
-      .song-filter:has(option[value="mlp-song"]:checked) ~ ul li.mlp-song { display:list-item; }
+      #song-filter:has(option[value="mlp-song"]:checked) ~ .mlp-song { display:inherit; }
+      #song-filter:has(option[value="mlp-song"]:checked) ~ ul li.mlp-song { display:list-item; }
 
-      .song-filter:has(option[value="hfy-song"]:checked) ~ .hfy-song { display:inherit; }
-      .song-filter:has(option[value="hfy-song"]:checked) ~ ul li.hfy-song { display:list-item; }
+      #song-filter:has(option[value="hfy-song"]:checked) ~ .hfy-song { display:inherit; }
+      #song-filter:has(option[value="hfy-song"]:checked) ~ ul li.hfy-song { display:list-item; }
 
-      .song-filter:has(option[value="winter-song"]:checked) ~ .winter-song { display:inherit; }
-      .song-filter:has(option[value="winter-song"]:checked) ~ ul li.winter-song { display:list-item; }
+      #song-filter:has(option[value="winter-song"]:checked) ~ .winter-song { display:inherit; }
+      #song-filter:has(option[value="winter-song"]:checked) ~ ul li.winter-song { display:list-item; }
       </style>
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
@@ -54,7 +54,8 @@
       $(function(){
         $(".song").each(function(){
           $title = $(this).attr('id');
-          $(this).append("<a href ='#main-wrap'>Back to Top</a>").load($title+".html");
+          $(this).append($('<div>').load($title+".html"));
+          $(this).append("<p>[<a href ='#song-filter'>Back to Top</a>]</p>");
         });
       });
 
@@ -74,7 +75,7 @@
     <div id="headerFile"></div>
     <div id="main-wrap">
       <div class="container">
-        <div class="song-filter">
+        <div id="song-filter">
            <label for="filter">Filter:</label>
 
           <select name="filter" id="filter">
