@@ -54,7 +54,18 @@
       $(function(){
         $(".song").each(function(){
           $title = $(this).attr('id');
-          $(this).load($title+".html");
+          $(this).append("<a href ='#main-wrap'>Back to Top</a>").load($title+".html");
+        });
+      });
+
+      $(function(){
+        $("button").click(function(){
+          $songcount = $(".song").length;
+          $random = Math.floor(Math.random() * $songcount);
+          window.scrollTo({
+            top: $($(".song")[$random]).offset().top,
+            left: 0,
+        });
         });
       });
     </script> 
@@ -79,6 +90,8 @@
             <!--<option value="winter-song">Winter Songs</option>-->
           </select> 
         </div>
+        <br />
+        <button type="button">Random song</button> 
         <br />
         <h2>Table of Contents</h2>
         <ul>
