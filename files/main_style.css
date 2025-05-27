@@ -4,7 +4,7 @@
  #logo { text-align:center; }
  #header { border-collapse: collapse; border-spacing: 0; width:100%; float:left; height:40px; margin-top:5px; position:relative; z-index:4;}
  #header-right table { float: right; width: 1px; }
- .header-align-outer { display: table; #position: relative; overflow: hidden; height:355px; padding-bottom:15px; }
+ .header-align-outer { display: table; #position: relative; overflow: hidden; height:300px; padding-bottom:15px; }
  .header-align-mid { #position: absolute; #top: 50%; display: table-cell; vertical-align: middle; }
 
 /* Header Nav */
