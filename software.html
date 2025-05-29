@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Zella Urquhart - Software</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+  
+    <link rel='stylesheet' type='text/css' href='/files/main_style.css?1442930302' title='wsite-theme-css' />
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+    <script> 
+      $(function(){
+        $("#headerFile").load("_header.html"); 
+      });
+    </script> 
+    <script type='text/javascript'>
+	  var currentSelection="none";
+	  function expandBlurb(clicked){
+        var defaultStyle = 'float:left;width:33%;margin:0;';
+        var selectedStyle = 'float:left;width:33.7%;margin:0; border:1px solid #eee; background-color:#eee;';
+
+        $(document.getElementsByClassName("collapsible")).each(function(){
+            $(this).attr("style", defaultStyle);
+        })
+
+		if (clicked.id==currentSelection){
+		  currentSelection="none";
+		} else {
+		  currentSelection=clicked.id;
+		}
+
+
+		switch(currentSelection){
+		  case "none":
+			document.getElementById("blurb").innerHTML="";
+		    break;
+		  case "studio-image":
+			document.getElementById("imageContainer0").setAttribute('style', selectedStyle);
+			var header = '<h2 style="text-align:left;">Studio</h2>'
+			var paragraph = '<div class="paragraph" style="text-align:left;">Studio is a mobile application similar to a social photoshop app. Users can edit photos using "overlays" and use other edits as inspiration. Two summers ago, I worked on their Android app. I updated their user analytics from Parse to Flurry, made the overlays load properly, and fixed some issues with signup/login as well as a bunch of minor fixes.</div>'
+			document.getElementById("blurb").innerHTML="<div style='color: #003300; background-color:#eee;'>"+header+paragraph+"</div>";
+			break;
+		  case "mizbee-image":
+			document.getElementById("imageContainer1").setAttribute('style', selectedStyle);
+			var header = '<h2 style="text-align:left;">Mizbee</h2>'
+			var paragraph = '<div class="paragraph" style="text-align:left;">Mizbee is a multi-scale synteny browser that can be used to compare genomic data between different species. Spring 2013, I made some updates to it to allow more data to be viewed without visual clutter and fix crashes and minor aesthetic issues that had appeared on a previous update of Processing.</div>'
+			document.getElementById("blurb").innerHTML="<div style='color: #003300; background-color:#eee;'>"+header+paragraph+"</div>";
+			break;
+		  case "weather-image":
+			document.getElementById("imageContainer2").setAttribute('style', selectedStyle);
+			var header = '<h2 style="text-align:left;">Weather Uncertainty Visualization</h2>'
+			var paragraph = '<div class="paragraph" style="text-align:left;">I made this prototype of a visualization to display multiple types of weather data. The user can input types, altitudes, and values to see predictions of where these values will occur according to multiple sources. Each source is displayed at once to create a spaghetti plot and show the uncertainty of the data.</div>'
+			document.getElementById("blurb").innerHTML="<div style='color: #003300; background-color:#eee;'>"+header+paragraph+"</div>";
+			break;
+		}
+	  }
+	</script>
+  </head>
+  <body class='no-header-page wsite-theme-light wsite-page-index'>
+    <div id="headerFile"></div>
+    <div id="main-wrap">
+      <div class="container">
+        <div id='gallery' class='imageGallery' style='line-height: 0px; padding: 0; margin: 0'>
+          <div id='imageContainer0' class="collapsible" style='float:left;width:33.33%;margin:1;'>
+			  <div id='galleryImageHolder0' style='position:relative;margin:5px;width:98%;padding:0 0 100%;overflow:hidden;'>
+				<input type="image" id="studio-image" onclick="expandBlurb(this)" src='/files/pictures/studio.png' class='galleryImage' _width='192' _height='192' style='position:absolute;border:0;width:100%;top:0%;left:0%' />
+			</div>
+		  </div>
+	      <div id='imageContainer1' class="collapsible" style='float:left;width:33.33%;margin:1;'>
+			<div id='galleryImageHolder1' style='position:relative;margin:5px;width:98%;padding:0 0 100%;overflow:hidden;'>
+              <input type="image" id="mizbee-image" onclick="expandBlurb(this)" src='/files/pictures/mizbee.png' class='galleryImage' _width='250' _height='250' style='position:absolute;border:0;width:100%;top:0%;left:0%' />
+			</div>
+		  </div>
+		  <div id='imageContainer2' class="collapsible"  style='float:left;width:33.33%;margin:1;'>
+		    <div id='galleryImageHolder2' style='position:relative;margin:5px;width:98%;padding:0 0 100%;overflow:hidden;'>
+			  <input type="image" id="weather-image" onclick="expandBlurb(this)" src='/files/pictures/weather.png' class='galleryImage' _width='250' _height='250' style='position:absolute;border:0;width:100%;top:0%;left:0%' />
+			</div>
+		  </div>
+		  <span style='display: block; clear: both; height: 0px; overflow: hidden;'></span>
+		</div>
+	    <div id="blurb">
+		  <div style='color: #003300; background-color:#eee;'>
+		    <div class="paragraph" style="text-align:left;">Click the images for more information.</div>
+		  </div>
+		</div>
+      </div>
+    </div>
+  </body>
+</html>
