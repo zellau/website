@@ -61,6 +61,7 @@
 
       $(function(){
         $("button").click(function(){
+          $("#filter").val("all").change();
           $songcount = $(".song").length;
           $random = Math.floor(Math.random() * $songcount);
           window.scrollTo({
@@ -76,7 +77,7 @@
     <div id="main-wrap">
       <div class="container">
         <div id="song-filter">
-           <label for="filter">Filter:</label>
+          <label for="filter">Filter:</label>
 
           <select name="filter" id="filter">
             <option selected value="all">All Songs</option>
