@@ -5,19 +5,42 @@
     <title>Russian Noun Declensions</title>  
     <link rel='stylesheet' type='text/css' href='/files/main_style.css?1442930302' title='wsite-theme-css' />
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
-    <script> 
-      $(function(){
-        $("#headerFile").load("_header.html"); 
-      });
-    </script> 
+    <style>
+      rt {font-size:14px;vertical-align:top;}
+    </style>
+    <script>
+      function checkWork() {
+        var feedbackBox = document.getElementById("feedback");
+        var x = document.getElementById("entry").value;
+        if (x == "мальчика") {
+          feedbackBox.style = "background-color:#00DD0010;border-color:#00DD00;border-width:2px;border-style:solid;padding:5px 15px;border-radius:15px"
+          feedbackBox.innerHTML = "<p style='color:#00DD00;'><b>Correct!</b></p><p style='color:#00DD00;'>This sentence requires a noun in the accusative singular -- мальчика!</p>"
+        } else {
+          feedbackBox.style = "background-color:#FF000020;border-color:#FF0000;border-width:2px;border-style:solid;padding:5px 15px;border-radius:15px"
+          feedbackBox.innerHTML = "<p style='color:#FF0000;'><b>Incorrect!</b></p><p style='color:#FF0000;'>This sentence requires a noun in the accusative singular -- мальчика!</p>"
+        }
+      }
+
+      function giveHint() {
+        var hintbox = document.getElementById("hint");
+        hintbox.style = "background-color:#DDDD0010;border-color:#DDDD00;border-width:2px;border-style:solid;padding:5px 15px;border-radius:5px"
+        hintbox.innerHTML = "<p>This sentence requires a noun in the accusative singular form.</p>"
+      }
+    </script>
   </head>
   <body class='no-header-page wsite-theme-light wsite-page-index'>
     <div id="main-wrap">
-      <div class="container">
-        <div class="paragraph" style="text-align:left;">Я опи́сываю <ruby><u><input></input></u><rt>мальчик</rt></ruby></div>
+      <div class="container" style="height: 500px;">
+        <div class="paragraph" style="text-align:left;">Я опи́сываю <ruby><u><form action="javascript:;" onsubmit="checkWork()"><input type="text" id="entry"></input></form></u><rt>мальчик</rt></ruby> <button id="hintButton" onclick="giveHint()">Hint</button></div>
         <br />
         <div class="paragraph" style="text-align:left;">I describe the boy</div>
+        <br />
+        <br />
+        <br />
         <div style="clear:both"></div>
+        <div id="hint" class="paragraph" style="text-align:left;"></div>
+        <br />
+        <div id="feedback" class="paragraph" style="text-align:left;"></div>
       </div>
     </div>
   </body>
