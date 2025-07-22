@@ -45,7 +45,10 @@
 
       #song-filter:has(option[value="abundance-song"]:checked) ~ .abundance-song { display:inherit; }
       #song-filter:has(option[value="abundance-song"]:checked) ~ ul li.abundance-song { display:list-item; }
-      </style>
+
+      #song-filter:has(option[value="halloween-song"]:checked) ~ .halloween-song { display:inherit; }
+      #song-filter:has(option[value="halloween-song"]:checked) ~ ul li.halloween-song { display:list-item; }
+    </style>
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
     <script> 
@@ -107,6 +110,7 @@
         <ul>
           <li><a href="#failure">Failure</a></li>
           <li class="love-song breakup-song"><a href="#hallelujah">Hallelujah</a></li>
+          <li class="halloween-song"><a href ="#grim-grinning-ghosts">Grim, Grinning Ghosts</a></li>
           <li class="love-song"><a href ="#canthelp">I Can't Help Falling in Love with You</a></li>
           <li class="love-song"><a href ="#bookoflove">The Book of Love</a></li>
           <li class="homestuck-song fandom-song"><a href ="#8r8k">8r8k</a></li>
@@ -150,7 +154,6 @@
           <li><a href ="#swing-life-away">Swing Life Away</a></li>
           <li class="homestuck-song fandom-song"><a href ="#t1ck-t0ck">t1CK t0ck</a></li>
           <li><a href ="#jerusalem">Jerusalem</a></li>
-          <!--<li class="halloween-song"><a href ="#grim-grinning-ghosts">Grim, Grinning Ghosts</a></li>-->
           <li class="halloween-song"><a href ="#spooky-scary-skeletons">Spooky, Scary Skeletons</a></li>
           <!--<li class="halloween-song"><a href ="#when-youre-evil">When You're Evil</a></li>-->
           <!--<li class="halloween-song"><a href ="#undead-lullaby">Undead Lullaby</a></li>-->
@@ -162,6 +165,7 @@
         <br />
         <div class="song" id="failure"></div>
         <div class="song love-song breakup-song" id="hallelujah"></div>
+        <div class="song halloween-song" id="grimgrinningghosts"></div>
         <div class="song love-song" id="canthelp"></div>
         <div class="song love-song" id="bookoflove"></div>
         <div class="song homestuck-song fandom-song" id="8r8k"></div>
