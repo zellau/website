@@ -25,11 +25,40 @@
       }
 
       var russian_problem;
+      var problemSet;
 
       $(function(){
         //$("#headerFile").load("_header.html");
-        russian_problem = new Problem("Я опи́сываю ___","I describe the boy","ма́льчик","ма́льчика","This sentence requires an animate group 2 noun in the accusative singular",true,2,"ACCUSATIVE SINGULAR");
+        var fileContents = readFile();
+        convertToProblems(fileContents);
           
+        resetProblem();
+      });
+
+      function readFile() {
+        var reader = new XMLHttpRequest();
+        reader.open("GET", "sentences.csv", false);
+        reader.send();
+        if (reader.status==200) {
+          result = reader.responseText;
+        }
+        return result
+      }
+
+      function convertToProblems(fileContents) {
+        var objects = fileContents.split('\n');
+        problemSet = new Array(objects.length - 1);
+        for (var i=1; i<objects.length; i++) {
+          var data = objects[i].split(',');
+          var problem = new Problem(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7]);
+          problemSet[i -1] = problem;
+        }
+      }
+
+      function resetProblem() {
+        var newProblemIndex = Math.floor(Math.random() * problemSet.length);
+        russian_problem = problemSet[newProblemIndex];
+
         var inputStart = "<ruby><form action='javascript:;' onsubmit='checkWork()'><input autocomplete='off' type='text' id='entry'></input></form><rt>";
         var inputEnd = "</rt></ruby>"
         var input = inputStart + russian_problem.word + inputEnd;
@@ -42,7 +71,7 @@
 
         var translationDiv = document.getElementById("translation");
         translationDiv.innerHTML = russian_problem.english_translation;
-      });
+      }
 
       function checkWork() {
         var feedbackBox = document.getElementById("feedback");
