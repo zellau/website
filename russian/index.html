@@ -7,33 +7,198 @@
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
     <style>
       rt {font-size:14px;vertical-align:top;}
+      td {border:1px solid black; margin: 0; padding: 0;}
     </style>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
     <script>
+      class Problem {
+        constructor(russian_sentence, english_translation, word, answer, explanation, animate, group, answer_declension) {
+          this.russian_sentence = russian_sentence;
+          this.english_translation = english_translation;
+          this.word = word;
+          this.answer = answer;
+          this.explanation = explanation;
+          this.animate = animate;
+          this.group = group;
+          this.answer_declension = answer_declension;
+        }
+      }
+
+      var russian_problem;
+
+      $(function(){
+        //$("#headerFile").load("_header.html");
+        russian_problem = new Problem("Я опи́сываю ___","I describe the boy","ма́льчик","ма́льчика","This sentence requires an animate group 2 noun in the accusative singular",true,2,"ACCUSATIVE SINGULAR");
+          
+        var inputStart = "<ruby><form action='javascript:;' onsubmit='checkWork()'><input autocomplete='off' type='text' id='entry'></input></form><rt>";
+        var inputEnd = "</rt></ruby>"
+        var input = inputStart + russian_problem.word + inputEnd;
+
+        var sentence = russian_problem.russian_sentence.replace("___", input);
+        var hintButton = "<button id='hintButton' onclick='giveHint()'>Hint</button>"
+
+        var problemDiv = document.getElementById("problem");
+        problemDiv.innerHTML = sentence+hintButton;
+
+        var translationDiv = document.getElementById("translation");
+        translationDiv.innerHTML = russian_problem.english_translation;
+      });
+
       function checkWork() {
         var feedbackBox = document.getElementById("feedback");
-        var x = document.getElementById("entry").value;
-        if (x == "мальчика") {
-          feedbackBox.style = "background-color:#00DD0010;border-color:#00DD00;border-width:2px;border-style:solid;padding:5px 15px;border-radius:15px"
-          feedbackBox.innerHTML = "<p style='color:#00DD00;'><b>Correct!</b></p><p style='color:#00DD00;'>This sentence requires a noun in the accusative singular -- мальчика!</p>"
+        var x = document.getElementById("entry").value.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        if (x == russian_problem.answer.normalize("NFD").replace(/[\u0300-\u036f]/g, "")) {
+          feedbackBox.style = "background-color:#00DD0010;border-color:#00DD00;border-width:2px;border-style:solid;padding:15px;border-radius:15px"
+          feedbackBox.innerHTML = "<p style='color:#00DD00;'><b>Correct!</b></p><p style='color:#00DD00;'>" + russian_problem.explanation + " -- " + russian_problem.answer +"!</p><button style='margin:auto;display:block;' id='newWordButton' onclick='window.location.reload();'>New Word!</button>"
         } else {
-          feedbackBox.style = "background-color:#FF000020;border-color:#FF0000;border-width:2px;border-style:solid;padding:5px 15px;border-radius:15px"
-          feedbackBox.innerHTML = "<p style='color:#FF0000;'><b>Incorrect!</b></p><p style='color:#FF0000;'>This sentence requires a noun in the accusative singular -- мальчика!</p>"
+          feedbackBox.style = "background-color:#FF000020;border-color:#FF0000;border-width:2px;border-style:solid;padding:15px;border-radius:15px"
+          feedbackBox.innerHTML = "<p style='color:#FF0000;'><b>Incorrect!</b></p><p style='color:#FF0000;'>" + russian_problem.explanation + " -- " + russian_problem.answer +"!</p><button style='margin:auto;display:block;' id='newWordButton' onclick='window.location.reload();'>New Word!</button>"
         }
       }
 
       function giveHint() {
         var hintbox = document.getElementById("hint");
         hintbox.style = "background-color:#DDDD0010;border-color:#DDDD00;border-width:2px;border-style:solid;padding:5px 15px;border-radius:5px"
-        hintbox.innerHTML = "<p>This sentence requires a noun in the accusative singular form.</p>"
+        var hintText = "<p>Is this noun in the <a onclick='selectDeclensionGroup(1)' title='Ends with -а or -я'>first</a>, <a onclick='selectDeclensionGroup(2)' title='Ends with -й, a consonant, -е, -о, or masculine -ь'>second</a>, or <a onclick='selectDeclensionGroup(3)' title='Ends with -мя or feminine -ь'>third</a> declension group?</p>"
+        
+        hintbox.innerHTML = hintText
+      }
+
+      function selectDeclensionGroup(x) {
+        var group1Table = `<table style='margin:auto' frame=void rules=rows>
+          <tbody>
+            <tr><td></td><td>Singular</td><td rowspan="7"></td><td>Plural</td></tr>
+            <tr><td>Nominative</td><td>-a</td><td>-y</td></tr>
+            <tr><td>Accusative</td><td>-u</td><td><a title='inanimate'>-y</a>/<a title='animate'>--</a></td></tr>
+            <tr><td>Genitive</td><td>-y</td><td>--</td></tr>
+            <tr><td>Prepositional</td><td>-ye</td><td>-ah</td></tr>
+            <tr><td>Dative</td><td>-ye</td><td>-am</td></tr>
+            <tr><td>Instrumental</td><td>-oy</td><td>-ami</td></tr>
+          </tbody>
+        </table>`
+        var group2Table = `<table style='margin:auto' frame=void rules=rows>
+          <tbody>
+            <tr><td></td><td colspan="2">Singular</td><td rowspan="7"></td><td colspan="2">Plural</td></tr>
+            <tr><td>Nominative</td><td>--</td><td>-o</td><td>-y</td><td>-a</td></tr>
+            <tr><td>Accusative</td><td><a title='inanimate'>--</a>/<a title='animate'>-a</a></td><td>-o</td><td><a title='inanimate'>-y</a>/<a title='animate'>-ov</a></td><td><a title='inanimate'>-a</a>/<a title='animate'>--</a></td></tr>
+            <tr><td>Genitive</td><td>-a</td><td>-a</td><td>-ov</td><td>--</td></tr>
+            <tr><td>Prepositional</td><td>-ye</td><td>-ye</td><td>-ah</td><td>-ah</td></tr>
+            <tr><td>Dative</td><td>-u</td><td>-u</td><td>-am</td><td>-am</td></tr>
+            <tr><td>Instrumental</td><td>-om</td><td>-om</td><td>-ami</td><td>-ami</td></tr>
+          </tbody>
+        </table>`
+        group3Table = `<table style='margin:auto' frame=void rules=rows>
+          <tbody>
+            <tr><td></td><td>Singular</td><td rowspan="7"></td><td>Plural</td></tr>
+            <tr><td>Nominative</td><td>-ь</td><td>-и</td></tr>
+            <tr><td>Accusative</td><td>-ь</td><td><a title='inanimate'>-и</a>/<a title='animate'>-ей</a></td></tr>
+            <tr><td>Genitive</td><td>-и</td><td>-ей</td></tr>
+            <tr><td>Prepositional</td><td>-и</td><td>-ях</td></tr>
+            <tr><td>Dative</td><td>-ью</td><td>-ях</td></tr>
+            <tr><td>Instrumental</td><td>-ью</td><td>-ях</td></tr>
+          </tbody>
+        </table>`
+        var hintbox = document.getElementById("hint");
+        hintbox.style = "background-color:#DDDD0010;border-color:#DDDD00;border-width:2px;border-style:solid;padding:15px; border-radius:5px"
+        if (x == 1) {
+          hintbox.innerHTML = group1Table
+        } else if (x == 2) {
+          hintbox.innerHTML = group2Table
+        } else {
+          hintbox.innerHTML = group3Table
+        }
+      }
+
+      function selectAnimacy(x, animacy) {
+        var group1AnimateTable = `<table frame=void rules=rows>
+          <tbody>
+            <tr><td></td><td>Singular</td><td rowspan="7"></td><td>Plural</td></tr>
+            <tr><td>Nominative</td><td>-a</td><td>-y</td></tr>
+            <tr><td>Accusative</td><td>-u</td><td>--</td></tr>
+            <tr><td>Genitive</td><td>-y</td><td>--</td></tr>
+            <tr><td>Prepositional</td><td>-ye</td><td>-ah</td></tr>
+            <tr><td>Dative</td><td>-ye</td><td>-am</td></tr>
+            <tr><td>Instrumental</td><td>-oy</td><td>-ami</td></tr>
+          </tbody>
+        </table>`
+         var group1InanimateTable = `<table frame=void rules=rows>
+          <tbody>
+            <tr><td></td><td>Singular</td><td rowspan="7"></td><td>Plural</td></tr>
+            <tr><td>Nominative</td><td>-a</td><td>-y</td></tr>
+            <tr><td>Accusative</td><td>-u</td><td>-y</td></tr>
+            <tr><td>Genitive</td><td>-y</td><td>--</td></tr>
+            <tr><td>Prepositional</td><td>-ye</td><td>-ah</td></tr>
+            <tr><td>Dative</td><td>-ye</td><td>-am</td></tr>
+            <tr><td>Instrumental</td><td>-oy</td><td>-ami</td></tr>
+          </tbody>
+        </table>`
+        var group2AnimateTable = `<table frame=void rules=rows>
+          <tbody>
+            <tr><td></td><td colspan="2">Singular</td><td rowspan="7"></td><td colspan="2">Plural</td></tr>
+            <tr><td>Nominative</td><td>--</td><td>-o</td><td>-y</td><td>-a</td></tr>
+            <tr><td>Accusative</td><td>-a</td><td>-o</td><td>-ov</td><td>--</td></tr>
+            <tr><td>Genitive</td><td>-a</td><td>-a</td><td>-ov</td><td>--</td></tr>
+            <tr><td>Prepositional</td><td>-ye</td><td>-ye</td><td>-ah</td><td>-ah</td></tr>
+            <tr><td>Dative</td><td>-u</td><td>-u</td><td>-am</td><td>-am</td></tr>
+            <tr><td>Instrumental</td><td>-om</td><td>-om</td><td>-ami</td><td>-ami</td></tr>
+          </tbody>
+        </table>`
+        var group2InanimateTable = `<table frame=void rules=rows>
+          <tbody>
+            <tr><td></td><td colspan="2">Singular</td><td rowspan="7"></td><td colspan="2">Plural</td></tr>
+            <tr><td>Nominative</td><td>--</td><td>-o</td><td>-y</td><td>-a</td></tr>
+            <tr><td>Accusative</td><td>--</td><td>-o</td><td>-y</td><td>-a</td></tr>
+            <tr><td>Genitive</td><td>-a</td><td>-a</td><td>-ov</td><td>--</td></tr>
+            <tr><td>Prepositional</td><td>-ye</td><td>-ye</td><td>-ah</td><td>-ah</td></tr>
+            <tr><td>Dative</td><td>-u</td><td>-u</td><td>-am</td><td>-am</td></tr>
+            <tr><td>Instrumental</td><td>-om</td><td>-om</td><td>-ami</td><td>-ami</td></tr>
+          </tbody>
+        </table>`
+        group3AnimateTable = `<table frame=void rules=rows>
+          <tbody>
+            <tr><td></td><td>Singular</td><td rowspan="7"></td><td>Plural</td></tr>
+            <tr><td>Nominative</td><td>-ь</td><td>-и</td></tr>
+            <tr><td>Accusative</td><td>-ь</td><td>-ей</td></tr>
+            <tr><td>Genitive</td><td>-и</td><td>-ей</td></tr>
+            <tr><td>Prepositional</td><td>-и</td><td>-ях</td></tr>
+            <tr><td>Dative</td><td>-ью</td><td>-ях</td></tr>
+            <tr><td>Instrumental</td><td>-ью</td><td>-ях</td></tr>
+          </tbody>
+        </table>`
+        group3InanimateTable = `<table frame=void rules=rows>
+          <tbody>
+            <tr><td></td><td>Singular</td><td rowspan="7"></td><td>Plural</td></tr>
+            <tr><td>Nominative</td><td>-ь</td><td>-и</td></tr>
+            <tr><td>Accusative</td><td>-ь</td><td>-и</td></tr>
+            <tr><td>Genitive</td><td>-и</td><td>-ей</td></tr>
+            <tr><td>Prepositional</td><td>-и</td><td>-ях</td></tr>
+            <tr><td>Dative</td><td>-ью</td><td>-ях</td></tr>
+            <tr><td>Instrumental</td><td>-ью</td><td>-ях</td></tr>
+          </tbody>
+        </table>`
+        var hintbox = document.getElementById("hint");
+        if (x == 1 && animacy) {
+          hintbox.innerHTML = group1AnimateTable
+        } else if (x == 1 && !animacy) {
+          hintbox.innerHTML = group1InanimateTable
+        } else if (x == 2 && animacy) {
+          hintbox.innerHTML = group2AnimateTable
+        } else if (x == 2 && !animacy) {
+          hintbox.innerHTML = group2InanimateTable
+        } else if (x == 3 && animacy) {
+          hintbox.innerHTML = group3AnimateTable
+        }else {
+          hintbox.innerHTML = group3InanimateTable
+        }
       }
     </script>
   </head>
   <body class='no-header-page wsite-theme-light wsite-page-index'>
     <div id="main-wrap">
       <div class="container" style="height: 500px;">
-        <div class="paragraph" style="text-align:left;">Я опи́сываю <ruby><u><form action="javascript:;" onsubmit="checkWork()"><input type="text" id="entry"></input></form></u><rt>мальчик</rt></ruby> <button id="hintButton" onclick="giveHint()">Hint</button></div>
+        <div id="problem" class="paragraph" style="text-align:left;"></div>
         <br />
-        <div class="paragraph" style="text-align:left;">I describe the boy</div>
+        <div id="translation" class="paragraph" style="text-align:left;"></div>
         <br />
         <br />
         <br />
