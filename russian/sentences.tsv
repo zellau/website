@@ -1,0 +1,86 @@
+Russian_Sentence	English_Translation	Word	Answer	Explanation	Animate	Group	Answer_Declension
+Я опи́сываю ___	I describe the boy	ма́льчик	ма́льчика	This sentence requires an animate group 2 noun in the accusative singular	TRUE	2	ACCUSATIVE SINGULAR
+___ тяжёлая.	The work is hard	рабо́та	Рабо́та	This sentence requires a group 1 noun in the nominative singular	NO	1	NOMINATIVE SINGULAR
+Я иду́ на ___.	I go to work	рабо́та	рабо́ту	This sentence requires a group 1 noun in the accusative singular	NO	1	ACCUSATIVE_SINGULAR
+Описа́ние ___ дли́нное	The job description is long	рабо́та	рабо́ты	This sentence requires a group 1 noun in the genitive singular	NO	1	GENITIVE_SINGULAR
+Я уделя́ю внима́ние ___.	I pay attention to work.	рабо́та	рабо́те	This sentence requires a group 1 noun in the dative singular	NO	1	DATIVE_SINGULAR
+У меня́ на ___ есть стол.	I have a desk at work.	рабо́та	рабо́те	This sentence requires a group 1 noun in the prepositional singular	NO	1	PREPOSITIONAL_SINGULAR
+Я дово́лен свое́й ___.	I am happy with my job.	рабо́та	рабо́той	This sentence requires a group 1 noun in the instrumental singular	NO	1	INSTRUMENTAL_SINGULAR
+У меня́ две ___.	I have two jobs	рабо́ты	рабо́ты	This sentence requires a group 1 noun in the nominative plural	NO	1	NOMINATIVE PLURAL
+Я уво́лился с ___.	I quit my jobs	рабо́ты	рабо́ты	This sentence requires an inanimate group 1 noun in the accusative plural	NO	1	ACCUSATIVE_PLURAL
+Гра́фик мои́х ___ запу́танный.	The schedule of my jobs is confusing	рабо́ты	рабо́т	This sentence requires a group 1 noun in the genitive plural	NO	1	GENITIVE_PLURAL
+Я ду́маю о ___.	I think about the jobs.	рабо́ты	рабо́тах	This sentence requires a group 1 noun in the prepositional plural.	NO	1	PREPOSITIONAL_PLURAL
+___ там.	The book is over there.	кни́га	кни́га	This sentence requires a group 1 noun in the nominative singular	NO	1	NOMINATIVE SINGULAR
+Я чита́ю ___.	I am reading a book.	кни́га	кни́гу	This sentence requires a group 1 noun in the accusative singular	NO	1	ACCUSATIVE_SINGULAR
+Мне нра́вится сюже́т ___.	I love the book's plot	кни́га	кни́ги	This sentence requires a group 1 noun in the genitive singular. The stem ends in a velar (г, к, or х) so the ending is -и rather than -ы.	NO	1	GENITIVE_SINGULAR
+Я отдаю́ немно́го любви́ ___.	I give some love to the book.	кни́га	кни́ге	This sentence requires a group 1 noun in the dative singular	NO	1	DATIVE_SINGULAR
+Её нос застря́л в ___.	Her nose is stuck in a book.	кни́га	кни́ге	This sentence requires a group 1 noun in the prepositional singular	NO	1	PREPOSITIONAL_SINGULAR
+Она́ уби́ла му́ху ___.	She killed a fly with a book	кни́га	кни́гой	This sentence requires a group 1 noun in the instrumental singular	NO	1	INSTRUMENTAL_SINGULAR
+___ тяжёлые.	Books are heavy.	кни́ги	кни́ги	This sentence requires a group 1 noun in the nominative plural. The stem ends in a velar (г, к, or х) so the ending is -и rather than -ы.	NO	1	NOMINATIVE PLURAL
+Он но́сит её ___.	He carries her books.	кни́ги	кни́ги	This sentence requires an group 1 noun in the accusative plural. The word is inanimate so the ending should be -ы, but stem ends in a velar (г, к, or х) so the ending is -и rather than -ы.	NO	1	ACCUSATIVE_PLURAL
+Я люблю́ а́втора э́тих ___.	I love the author of these books.	кни́ги	книг	This sentence requires a group 1 noun in the genitive plural	NO	1	GENITIVE_PLURAL
+Я подхожу́ к ___.	I walk over to the books.	кни́ги	кни́гам	This sentence requires a group 1 noun in the dative plural	NO	1	DATIVE_PLURAL
+Он расска́зывает ей о ___.	He tells her about the books.	кни́ги	кни́гах	This sentence requires a group 1 noun in the prepositional plural	NO	1	PREPOSITIONAL_PLURAL
+Он свора́чивается кала́чиком с ___	He curls up with some books	кни́ги	кни́гами	This sentence requires a group 1 noun in the instrumental plural	NO	1	INSTRUMENTAL_PLURAL
+___ пуши́стая.	The dog is fluffy.	соба́ка	соба́ка	This sentence requires a group 1 noun in the nominative singular	YES	1	NOMINATIVE SINGULAR
+Они́ гла́дят ___.	They pet the dog.	соба́ка	соба́ку	This sentence requires a group 1 noun in the accusative singular	YES	1	ACCUSATIVE_SINGULAR
+Оше́йник у ___ кра́сный.	The dog's collar is red	соба́ка	соба́ки	This sentence requires a group 1 noun in the genitive singular. The stem ends in a velar (г\	 к\	 or х) so the ending is -и rather than -ы.	YES	1	GENITIVE_SINGULAR
+Я броса́ю мяч ___.	I throw the ball to the dog.	соба́ка	соба́ке	This sentence requires a group 1 noun in the dative singular	YES	1	DATIVE_SINGULAR
+На ___ грязь.	There is mud on the dog.	соба́ка	соба́ке	This sentence requires a group 1 noun in the prepositional singular	YES	1	PREPOSITIONAL_SINGULAR
+Мы идём бе́гать с ___.	We go running with the dog.	соба́ка	соба́кой	This sentence requires a group 1 noun in the instrumental singular	YES	1	INSTRUMENTAL_SINGULAR
+___ шумные.	The dogs are loud.	соба́ки	соба́ки	This sentence requires a group 1 noun in the nominative plural. The stem ends in a velar (г, к, or х) so the ending is -и rather than -ы.	YES	1	NOMINATIVE PLURAL
+___ купа́ют.	They bathe the dogs.	соба́ки	соба́к	This sentence requires an animate group 1 noun in the accusative plural. The word is animate, so the ending is missing rather than -ы.	YES	1	ACCUSATIVE_PLURAL
+Ла́пы у ___ у́стали.	The dogs' paws are tired.	соба́ки	соба́к	This sentence requires a group 1 noun in the genitive plural	YES	1	GENITIVE_PLURAL
+Он даёт во́ду ___.	He gives water to the dogs.	соба́ки	соба́кам	This sentence requires a group 1 noun in the dative plural	YES	1	DATIVE_PLURAL
+На ___ кра́ска.	The paint is on the dogs.	соба́ки	соба́ках	This sentence requires a group 1 noun in the prepositional plural	YES	1	PREPOSITIONAL_PLURAL
+Они́ го́нятся за ___.	They chase the dogs.	соба́ки	соба́ками	This sentence requires a group 1 noun in the instrumental plural	YES	1	INSTRUMENTAL_PLURAL
+___ был дли́нный.	The movie is long	фильм	фильм	This sentence requires a group 2 noun in the nominative singular	NO	2	NOMINATIVE SINGULAR
+Посмотри́ ___.	Watch a movie.	фильм	фильм	This sentence requires a group 2 noun in the accusative singular. The noun is inanimate	 so it ends with a consonant and not -a	NO	2	ACCUSATIVE_SINGULAR
+Он явля́ется режиссёром ___.	He is the director of the movie.	фильм	фи́льма	This sentence requires a group 2 noun in the genitive singular	NO	2	GENITIVE_SINGULAR
+Он доба́вил концо́вку к ___.	He added an ending to the movie.	фильм	фи́льму	This sentence requires a group 2 noun in the dative singular	NO	2	DATIVE_SINGULAR
+Он был в ___.	He was in a movie.	фильм	фи́льме	This sentence requires a group 2 noun in the prepositional singular	NO	2	PREPOSITIONAL_SINGULAR
+Они́ пришли́ с ___.	They showed up with a movie.	фильм	фи́льмом	This sentence requires a group 2 noun in the instrumental singular	NO	2	INSTRUMENTAL_SINGULAR
+___ — э́то ве́село.	Movies are fun.	фи́льмы	фи́льмы	This sentence requires a group 2 noun in the nominative plural	NO	2	NOMINATIVE PLURAL
+Мы монти́руем ___.	We edit movies.	фи́льмы	фи́льмы	This sentence requires a group 2 noun in the accusative plural. The noun is inanimate, so it ends with -y and not -ov	NO	2	ACCUSATIVE_PLURAL
+Я смотрю́ то́лько нача́ло ___.	I only watch the start of movies.	фи́льмы	фи́льмов	This sentence requires a group 2 noun in the genitive plural	NO	2	GENITIVE_PLURAL
+Он дал ___ отрица́тельную реце́нзию.	He gave the movies a bad review.	фи́льмы	фи́льмам	This sentence requires a group 2 noun in the dative plural	NO	2	DATIVE_PLURAL
+Пе́сня звучи́т в ___.	The song is in the movies.	фи́льмы	фи́льмах	This sentence requires a group 2 noun in the prepositional plural.	NO	2	PREPOSITIONAL_PLURAL
+Он посла́л сообще́ние с ___.	He sent a message with the movies.	фи́льмы	фи́льмами	This sentence requires a group 2 noun in the instrumental plural	NO	2	INSTRUMENTAL_PLURAL
+___ — худо́жник.	Father is an artist.	оте́ц	оте́ц	This sentence requires a group 2 noun in the nominative singular	YES	2	NOMINATIVE SINGULAR
+Я люблю́ ___.	I love father.	оте́ц	отца́	This sentence requires a group 2 noun in the accusative singular. The noun is animate	 so it ends with -a and not a consonant.	YES	2	ACCUSATIVE_SINGULAR
+Э́то люби́мая маши́на ___.	That is father's favorite car.	оте́ц	отца́	This sentence requires a group 2 noun in the genitive singular	YES	2	GENITIVE_SINGULAR
+Она́ показа́ла ___ письмо́.	She showed father the letter	оте́ц	отцу́	This sentence requires a group 2 noun in the dative singular	YES	2	DATIVE_SINGULAR
+Кот на ___.	The cat is on father.	оте́ц	отце́	This sentence requires a group 2 noun in the prepositional singular	YES	2	PREPOSITIONAL_SINGULAR
+Он пошёл на рыба́лку с ___.	He went fishing with father.	оте́ц	отцо́м	This sentence requires a group 2 noun in the instrumental singular	YES	2	INSTRUMENTAL_SINGULAR
+___ бы́ли обеспоко́ены.	The fathers were concerned.	отцы́	отцы́	This sentence requires a group 2 noun in the nominative plural	YES	2	NOMINATIVE PLURAL
+Они́ копи́руют ___.	They copied the fathers.	отцы́	отцо́в	This sentence requires a group 2 noun in the accusative plural. The noun is animate, so it ends with -ov and not -y.	YES	2	ACCUSATIVE_PLURAL
+Де́ти спря́тались от ___.	The children hid from their fathers.	отцы́	отцо́в	This sentence requires a group 2 noun in the genitive plural	YES	2	GENITIVE_PLURAL
+Она́ дала́ ___ зада́ние.	She gave the fathers a task.	отцы́	отца́м	This sentence requires a group 2 noun in the dative plural	YES	2	DATIVE_PLURAL
+Оши́бка в ___.	The mistake is in the fathers.	отцы́	отца́х	This sentence requires a group 2 noun in the prepositional plural.	YES	2	PREPOSITIONAL_PLURAL
+Ма́тери иду́т с ___.	The mothers walk with the fathers.	отцы́	отца́ми	This sentence requires a group 2 noun in the instrumental plural	YES	2	INSTRUMENTAL_PLURAL
+У тебя́ есть ___?	Do you have a boyfriend?	па́рень	па́рень	This sentence requires a group 2 noun in the nominative singular	YES	2	NOMINATIVE SINGULAR
+Уда́рь ___.	Hit the guy.	па́рень	па́рня	This sentence requires a group 2 noun in the accusative singular. The noun is animate	 so it ends with -a and not a consonant.	YES	2	ACCUSATIVE_SINGULAR
+Не сме́йтесь над и́менем ___.	Don't make fun of a guy's name.	па́рень	па́рня	This sentence requires a group 2 noun in the genitive singular	YES	2	GENITIVE_SINGULAR
+Расскажи́ ___.	Tell the guy.	па́рень	па́рню	This sentence requires a group 2 noun in the dative singular	YES	2	DATIVE_SINGULAR
+Знак был на том ___.	The sign was on that guy.	па́рень	па́рне	This sentence requires a group 2 noun in the prepositional singular	YES	2	PREPOSITIONAL_SINGULAR
+Иди́ с э́тим ___.	Go with that guy.	па́рень	па́рнем	This sentence requires a group 2 noun in the instrumental singular	YES	2	INSTRUMENTAL_SINGULAR
+___ остаю́тся парня́ми.	Guys being guys.	па́рни	па́рни	This sentence requires a group 2 noun in the nominative plural	YES	2	NOMINATIVE PLURAL
+Они́ обману́ли ___.	They tricked the guys.	па́рни	парне́й	This sentence requires a group 2 noun in the accusative plural. The noun is animate, so it ends with -ov and not -y.	YES	2	ACCUSATIVE_PLURAL
+Чу́вства ___ бы́ли заде́ты.	The guys' feelings were hurt.	па́рни	парне́й	This sentence requires a group 2 noun in the genitive plural	YES	2	GENITIVE_PLURAL
+Они́ рассказа́ли об э́том свои́м ___.	They told their boyfriends.	па́рни	парня́м	This sentence requires a group 2 noun in the dative plural	YES	2	DATIVE_PLURAL
+Не ду́май об э́тих ___.	Don't think about those guys.	па́рни	парня́х	This sentence requires a group 2 noun in the prepositional plural.	YES	2	PREPOSITIONAL_PLURAL
+Па́рни остаю́тся ___.	Guys being guys.	па́рни	парня́ми	This sentence requires a group 2 noun in the instrumental plural	YES	2	INSTRUMENTAL_PLURAL
+___ я́ркий	The fire is bright.	ого́нь	ого́нь	This sentence requires a group 2 noun in the nominative singular	NO	2	NOMINATIVE SINGULAR
+Разожги́те ___.	Light the fire.	ого́нь	ого́нь	This sentence requires a group 2 noun in the accusative singular. The noun is inanimate	 so it ends with a consonant and not -a	NO	2	ACCUSATIVE_SINGULAR
+Они́ стоя́т в тепле́ ___.	They stand in the warmth of the fire.	ого́нь	огня́	This sentence requires a group 2 noun in the genitive singular	NO	2	GENITIVE_SINGULAR
+Он де́ржится побли́же к ___.	He stays close to the fire.	ого́нь	огню́	This sentence requires a group 2 noun in the dative singular	NO	2	DATIVE_SINGULAR
+Она́ танцева́ла в ___.	She dances in the fire.	ого́нь	огне́	This sentence requires a group 2 noun in the prepositional singular	NO	2	PREPOSITIONAL_SINGULAR
+Вы игра́ете с ___.	You are playing with fire.	ого́нь	огнём	This sentence requires a group 2 noun in the instrumental singular	NO	2	INSTRUMENTAL_SINGULAR
+___ зажжены́.	The fires are lit.	огни́	огни́	This sentence requires a group 2 noun in the nominative plural	NO	2	NOMINATIVE PLURAL
+Я ви́жу ___.	I see the lights.	огни́	огни́	This sentence requires a group 2 noun in the accusative plural. The noun is inanimate, so it ends with -y and not -ov	NO	2	ACCUSATIVE_PLURAL
+Вы́йди на свет ___.	Come into the light of the fires.	огни́	огне́й	This sentence requires a group 2 noun in the genitive plural	NO	2	GENITIVE_PLURAL
+Мы помогли́ ___ не распространи́ться.	We helped the fires not to spread.	огни́	огня́м	This sentence requires a group 2 noun in the dative plural	NO	2	DATIVE_PLURAL
+Она́ предупреди́ла нас о ___.	She warned us about fires.	огни́	огня́х	This sentence requires a group 2 noun in the prepositional plural.	NO	2	PREPOSITIONAL_PLURAL
+Ночь была́ освещена́ ___.	The night was lit up by the fires.	огни́	огня́ми	This sentence requires a group 2 noun in the instrumental plural	NO	2	INSTRUMENTAL_PLURAL
+Он снима́лся в ___.	He appeared in the films.	фи́льмы	фи́льмах	This sentence requires a group 2 noun in the prepositional plural.	NO	2	PREPOSITIONAL_PLURAL
+Он спроси́л ___.	He asked the fathers.	отцы́	отцо́в	This sentence requires a group 2 noun in the accusative plural. The noun is animate	 so it ends with -ov and not -ov.	NO	2	ACCUSATIVE_PLURAL

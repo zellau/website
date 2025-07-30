@@ -37,7 +37,7 @@
 
       function readFile() {
         var reader = new XMLHttpRequest();
-        reader.open("GET", "sentences.csv", false);
+        reader.open("GET", "sentences.tsv", false);
         reader.send();
         if (reader.status==200) {
           result = reader.responseText;
@@ -49,7 +49,7 @@
         var objects = fileContents.split('\n');
         problemSet = new Array(objects.length - 1);
         for (var i=1; i<objects.length; i++) {
-          var data = objects[i].split(',');
+          var data = objects[i].split('\t');
           var problem = new Problem(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7]);
           problemSet[i -1] = problem;
         }
