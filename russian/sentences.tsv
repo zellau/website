@@ -70,7 +70,7 @@ ___ остаю́тся парня́ми.	Guys being guys.	па́рни	па́р�
 Они́ рассказа́ли об э́том свои́м ___.	They told their boyfriends.	па́рни	парня́м	This sentence requires a group 2 noun in the dative plural	YES	2	DATIVE_PLURAL
 Не ду́май об э́тих ___.	Don't think about those guys.	па́рни	парня́х	This sentence requires a group 2 noun in the prepositional plural.	YES	2	PREPOSITIONAL_PLURAL
 Па́рни остаю́тся ___.	Guys being guys.	па́рни	парня́ми	This sentence requires a group 2 noun in the instrumental plural	YES	2	INSTRUMENTAL_PLURAL
-___ я́ркий	The fire is bright.	ого́нь	ого́нь	This sentence requires a group 2 noun in the nominative singular	NO	2	NOMINATIVE SINGULAR
+___ я́ркий.	The fire is bright.	ого́нь	ого́нь	This sentence requires a group 2 noun in the nominative singular	NO	2	NOMINATIVE SINGULAR
 Разожги́те ___.	Light the fire.	ого́нь	ого́нь	This sentence requires a group 2 noun in the accusative singular. The noun is inanimate	 so it ends with a consonant and not -a	NO	2	ACCUSATIVE_SINGULAR
 Они́ стоя́т в тепле́ ___.	They stand in the warmth of the fire.	ого́нь	огня́	This sentence requires a group 2 noun in the genitive singular	NO	2	GENITIVE_SINGULAR
 Он де́ржится побли́же к ___.	He stays close to the fire.	ого́нь	огню́	This sentence requires a group 2 noun in the dative singular	NO	2	DATIVE_SINGULAR
