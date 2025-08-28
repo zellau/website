@@ -71,6 +71,14 @@
 
         var translationDiv = document.getElementById("translation");
         translationDiv.innerHTML = russian_problem.english_translation;
+
+        var feedbackBox = document.getElementById("feedback");
+        feedbackBox.style = "text-align:left;";
+        feedbackBox.innerHTML = "";
+
+        var hintbox = document.getElementById("hint");
+        hintbox.style = "text-align:left;";
+        hintbox.innerHTML = "";
       }
 
       function checkWork() {
@@ -78,10 +86,10 @@
         var x = document.getElementById("entry").value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
         if (x == russian_problem.answer.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()) {
           feedbackBox.style = "background-color:#00DD0010;border-color:#00DD00;border-width:2px;border-style:solid;padding:15px;border-radius:15px"
-          feedbackBox.innerHTML = "<p style='color:#00DD00;'><b>Correct!</b></p><p style='color:#00DD00;'>" + russian_problem.explanation + " -- " + russian_problem.answer +"!</p><button style='margin:auto;display:block;' id='newWordButton' onclick='window.location.reload();'>New Word!</button>"
+          feedbackBox.innerHTML = "<p style='color:#00DD00;'><b>Correct!</b></p><p style='color:#00DD00;'>" + russian_problem.explanation + " -- " + russian_problem.answer +"!</p><button style='margin:auto;display:block;' id='newWordButton' onclick='resetProblem();'>New Word!</button>"
         } else {
           feedbackBox.style = "background-color:#FF000020;border-color:#FF0000;border-width:2px;border-style:solid;padding:15px;border-radius:15px"
-          feedbackBox.innerHTML = "<p style='color:#FF0000;'><b>Incorrect!</b></p><p style='color:#FF0000;'>" + russian_problem.explanation + " -- " + russian_problem.answer +"!</p><button style='margin:auto;display:block;' id='newWordButton' onclick='window.location.reload();'>New Word!</button>"
+          feedbackBox.innerHTML = "<p style='color:#FF0000;'><b>Incorrect!</b></p><p style='color:#FF0000;'>" + russian_problem.explanation + " -- " + russian_problem.answer +"!</p><button style='margin:auto;display:block;' id='newWordButton' onclick='resetProblem();'>New Word!</button>"
         }
       }
 
