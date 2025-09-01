@@ -3,11 +3,12 @@
   <head>
     <meta charset="utf-8">
     <title>Russian Noun Declensions</title>  
-    <link rel='stylesheet' type='text/css' href='/files/main_style.css?1442930302' title='wsite-theme-css' />
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
     <style>
       rt {font-size:14px;vertical-align:top;}
       td {border:1px solid black; margin: 0; padding: 0;}
+      body { margin: 0; padding: 0; }
+      .container { margin: 0 auto; width: 960px; }
     </style>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
     <script>
@@ -34,6 +35,17 @@
           
         resetProblem();
       });
+
+      function collapseHeader() {
+        var collapsibles = document.getElementsByClassName("collapsible");
+
+        var content = collapsibles[0];
+       if (content.style.display === "block") {
+          content.style.display = "none";
+        } else {
+          content.style.display = "block";
+        }
+      }
 
       function readFile() {
         var reader = new XMLHttpRequest();
@@ -231,11 +243,50 @@
     </script>
   </head>
   <body class='no-header-page wsite-theme-light wsite-page-index'>
-    <div id="top-background" style="height:44px;background-color:black;">
-      <img src="settings.png" style="float:right; height:30px; width:30px; margin:7px 100px 7px 5px;"/>
+    <div id="top-background" style="height:44px;background-color:black;" onclick="collapseHeader()";>
+      <img src="settings.png" style="float:right; height:30px; width:30px; margin:7px 10% 7px 5px;"/>
     </div>
-    <div id="main-wrap">
-      <div class="container" style="height: 500px;">
+    <div id="main-wrap" style="background-color: white;">
+      <div class="collapsible" style="border: 1px black; border-style: none solid solid solid; border-radius: 0px 0px 10px 10px; height: 150px; width: 70%;background-color: white; margin: auto; position: relative; z-index: 1; display: none; padding: 10px 5%;">
+        <span style="width: 50%; display: inline-block;">
+          <input type="checkbox" id="nom" name="nom" value="Nominative" checked />
+          <label for="nom"> Nominative / именительный</label><br/>
+
+          <input type="checkbox" id="acc" name="acc" value="Accusative" checked />
+          <label for="acc"> Accusative / винительный</label><br/>
+
+          <input type="checkbox" id="gen" name="gen" value="Genitive" checked />
+          <label for="gen"> Genitive / родительный</label><br/>
+
+          <input type="checkbox" id="dat" name="dat" value="Dative" checked />
+          <label for="dat"> Dative / дательный</label><br/>
+
+          <input type="checkbox" id="prep" name="prep" value="Prepositional" checked />
+          <label for="prep"> Prepositional / предложный</label><br/>
+
+          <input type="checkbox" id="inst" name="inst" value="Instrumental" checked />
+          <label for="inst"> Instrumental / творительный</label><br/>
+        </span>
+        <span style="width: 40%; display: inline-block;">
+          <input type="checkbox" id="sing" name="sing" value="Singular" checked />
+          <label for="sing"> Singular / единственный</label><br/>
+
+          <input type="checkbox" id="plur" name="plur" value="Plural" checked />
+          <label for="plur"> Plural / множественный</label><br/>
+
+          <br/>
+
+          <input type="checkbox" id="g1" name="g1" value="Group 1" checked />
+          <label for="g1"> Group 1 / I склонение</label><br/>
+
+          <input type="checkbox" id="g2" name="g2" value="Group 2" checked />
+          <label for="g2"> Group 2 / II склонение</label><br/>
+
+          <input type="checkbox" id="g3" name="g3" value="Group 3" checked />
+          <label for="g3"> Group 3 / III склонение</label><br/>
+        </span>
+      </div>
+      <div class="container" style="height: 500px; background-color: white; position: absolute; top: 60px; left: 0px; right: 0px; margin-inline: auto;">
         <div id="problem" class="paragraph" style="text-align:left;"></div>
         <br />
         <div id="translation" class="paragraph" style="text-align:left;"></div>
