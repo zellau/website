@@ -3,11 +3,12 @@
   <head>
     <meta charset="utf-8">
     <title>Russian Noun Declensions</title>  
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
     <style>
       rt {font-size:14px;vertical-align:top;}
       td {border:1px solid black; margin: 0; padding: 0;}
       body { margin: 0; padding: 0; }
+      a {color:gray; text-decoration: underline; padding-bottom:0;}
+      rt { padding-bottom:4px; }
       .container { margin: 0 auto; width: 960px; }
     </style>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
@@ -77,9 +78,10 @@
 
         var sentence = russian_problem.russian_sentence.replace("___", input);
         var hintButton = "<button id='hintButton' onclick='giveHint()'>Hint</button>"
+        var spacer = "<span style='width: 5px; display: inline-block;'></span>"
 
         var problemDiv = document.getElementById("problem");
-        problemDiv.innerHTML = sentence+hintButton;
+        problemDiv.innerHTML = sentence+spacer+hintButton;
 
         var translationDiv = document.getElementById("translation");
         translationDiv.innerHTML = russian_problem.english_translation;
@@ -120,8 +122,8 @@
             <tr><td>Nominative</td><td>-a</td><td>-y</td></tr>
             <tr><td>Accusative</td><td>-u</td><td><a title='inanimate'>-y</a>/<a title='animate'>--</a></td></tr>
             <tr><td>Genitive</td><td>-y</td><td>--</td></tr>
-            <tr><td>Prepositional</td><td>-ye</td><td>-ah</td></tr>
             <tr><td>Dative</td><td>-ye</td><td>-am</td></tr>
+            <tr><td>Prepositional</td><td>-ye</td><td>-ah</td></tr>
             <tr><td>Instrumental</td><td>-oy</td><td>-ami</td></tr>
           </tbody>
         </table>`
@@ -131,8 +133,8 @@
             <tr><td>Nominative</td><td>--</td><td>-o</td><td>-y</td><td>-a</td></tr>
             <tr><td>Accusative</td><td><a title='inanimate'>--</a>/<a title='animate'>-a</a></td><td>-o</td><td><a title='inanimate'>-y</a>/<a title='animate'>-ov/-yey</a></td><td><a title='inanimate'>-a</a>/<a title='animate'>--</a></td></tr>
             <tr><td>Genitive</td><td>-a</td><td>-a</td><td>-ov/-yey</td><td>--</td></tr>
-            <tr><td>Prepositional</td><td>-ye</td><td>-ye</td><td>-ah</td><td>-ah</td></tr>
             <tr><td>Dative</td><td>-u</td><td>-u</td><td>-am</td><td>-am</td></tr>
+            <tr><td>Prepositional</td><td>-ye</td><td>-ye</td><td>-ah</td><td>-ah</td></tr>
             <tr><td>Instrumental</td><td>-om</td><td>-om</td><td>-ami</td><td>-ami</td></tr>
           </tbody>
         </table>`
@@ -142,8 +144,8 @@
             <tr><td>Nominative</td><td>-ь</td><td>-и</td></tr>
             <tr><td>Accusative</td><td>-ь</td><td><a title='inanimate'>-и</a>/<a title='animate'>-ей</a></td></tr>
             <tr><td>Genitive</td><td>-и</td><td>-ей</td></tr>
-            <tr><td>Prepositional</td><td>-и</td><td>-ях</td></tr>
             <tr><td>Dative</td><td>-и</td><td>-ям</td></tr>
+            <tr><td>Prepositional</td><td>-и</td><td>-ях</td></tr>
             <tr><td>Instrumental</td><td>-ью</td><td>-ями</td></tr>
           </tbody>
         </table>`
@@ -165,8 +167,8 @@
             <tr><td>Nominative</td><td>-a</td><td>-y</td></tr>
             <tr><td>Accusative</td><td>-u</td><td>--</td></tr>
             <tr><td>Genitive</td><td>-y</td><td>--</td></tr>
-            <tr><td>Prepositional</td><td>-ye</td><td>-ah</td></tr>
             <tr><td>Dative</td><td>-ye</td><td>-am</td></tr>
+            <tr><td>Prepositional</td><td>-ye</td><td>-ah</td></tr>
             <tr><td>Instrumental</td><td>-oy</td><td>-ami</td></tr>
           </tbody>
         </table>`
@@ -176,8 +178,8 @@
             <tr><td>Nominative</td><td>-a</td><td>-y</td></tr>
             <tr><td>Accusative</td><td>-u</td><td>-y</td></tr>
             <tr><td>Genitive</td><td>-y</td><td>--</td></tr>
-            <tr><td>Prepositional</td><td>-ye</td><td>-ah</td></tr>
             <tr><td>Dative</td><td>-ye</td><td>-am</td></tr>
+            <tr><td>Prepositional</td><td>-ye</td><td>-ah</td></tr>
             <tr><td>Instrumental</td><td>-oy</td><td>-ami</td></tr>
           </tbody>
         </table>`
@@ -187,8 +189,8 @@
             <tr><td>Nominative</td><td>--</td><td>-o</td><td>-y</td><td>-a</td></tr>
             <tr><td>Accusative</td><td>-a</td><td>-o</td><td>-ov</td><td>--</td></tr>
             <tr><td>Genitive</td><td>-a</td><td>-a</td><td>-ov</td><td>--</td></tr>
-            <tr><td>Prepositional</td><td>-ye</td><td>-ye</td><td>-ah</td><td>-ah</td></tr>
             <tr><td>Dative</td><td>-u</td><td>-u</td><td>-am</td><td>-am</td></tr>
+            <tr><td>Prepositional</td><td>-ye</td><td>-ye</td><td>-ah</td><td>-ah</td></tr>
             <tr><td>Instrumental</td><td>-om</td><td>-om</td><td>-ami</td><td>-ami</td></tr>
           </tbody>
         </table>`
@@ -198,8 +200,8 @@
             <tr><td>Nominative</td><td>--</td><td>-o</td><td>-y</td><td>-a</td></tr>
             <tr><td>Accusative</td><td>--</td><td>-o</td><td>-y</td><td>-a</td></tr>
             <tr><td>Genitive</td><td>-a</td><td>-a</td><td>-ov</td><td>--</td></tr>
-            <tr><td>Prepositional</td><td>-ye</td><td>-ye</td><td>-ah</td><td>-ah</td></tr>
             <tr><td>Dative</td><td>-u</td><td>-u</td><td>-am</td><td>-am</td></tr>
+            <tr><td>Prepositional</td><td>-ye</td><td>-ye</td><td>-ah</td><td>-ah</td></tr>
             <tr><td>Instrumental</td><td>-om</td><td>-om</td><td>-ami</td><td>-ami</td></tr>
           </tbody>
         </table>`
@@ -209,8 +211,8 @@
             <tr><td>Nominative</td><td>-ь</td><td>-и</td></tr>
             <tr><td>Accusative</td><td>-ь</td><td>-ей</td></tr>
             <tr><td>Genitive</td><td>-и</td><td>-ей</td></tr>
-            <tr><td>Prepositional</td><td>-и</td><td>-ях</td></tr>
             <tr><td>Dative</td><td>-ью</td><td>-ях</td></tr>
+            <tr><td>Prepositional</td><td>-и</td><td>-ях</td></tr>
             <tr><td>Instrumental</td><td>-ью</td><td>-ях</td></tr>
           </tbody>
         </table>`
@@ -220,8 +222,8 @@
             <tr><td>Nominative</td><td>-ь</td><td>-и</td></tr>
             <tr><td>Accusative</td><td>-ь</td><td>-и</td></tr>
             <tr><td>Genitive</td><td>-и</td><td>-ей</td></tr>
-            <tr><td>Prepositional</td><td>-и</td><td>-ях</td></tr>
             <tr><td>Dative</td><td>-ью</td><td>-ях</td></tr>
+            <tr><td>Prepositional</td><td>-и</td><td>-ях</td></tr>
             <tr><td>Instrumental</td><td>-ью</td><td>-ях</td></tr>
           </tbody>
         </table>`
