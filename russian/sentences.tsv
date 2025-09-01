@@ -1,8 +1,8 @@
 Russian_Sentence	English_Translation	Word	Answer	Explanation	Animate	Group	Answer_Declension
 ___ тяжёлая.	The work is hard	рабо́та	Рабо́та	This sentence requires a noun in the NOMINATIVE_SINGULAR. The word is a group 1 noun, which ends with -а	NO	1	NOMINATIVE_SINGULAR
 Я иду́ на ___.	I go to work	рабо́та	рабо́ту	This sentence requires a noun in the accusative singular. The word is a group 1 noun, which ends with -у	NO	1	ACCUSATIVE_SINGULAR
-Описа́ние рабо́ты дли́нное	The job description is long	рабо́та	рабо́ты	This sentence requires a noun in the genitive singular. The word is a group 1 noun, which ends with -ы	NO	1	GENITIVE_SINGULAR
-Я уделя́ю внима́ние рабо́те.	I pay attention to work.	рабо́та	рабо́те	This sentence requires a noun in the dative singular. The word is a group 1 noun, which ends with -е	NO	1	DATIVE_SINGULAR
+Описа́ние ___ дли́нное	The job description is long	рабо́та	рабо́ты	This sentence requires a noun in the genitive singular. The word is a group 1 noun, which ends with -ы	NO	1	GENITIVE_SINGULAR
+Я уделя́ю внима́ние ___.	I pay attention to work.	рабо́та	рабо́те	This sentence requires a noun in the dative singular. The word is a group 1 noun, which ends with -е	NO	1	DATIVE_SINGULAR
 У меня́ на ___ есть стол.	I have a desk at work.	рабо́та	рабо́та	This sentence requires a noun in the prepositional singular. The word is a group 1 noun, which ends with -е	NO	1	PREPOSITIONAL_SINGULAR
 Я дово́лен свое́й ___.	I am happy with my job.	рабо́та	рабо́той	This sentence requires a noun in the instrumental singular. The word is a group 1 noun, which ends with -ой	NO	1	INSTRUMENTAL_SINGULAR
 У меня́ две ___.	I have two jobs	рабо́ты	рабо́ты	This sentence requires a noun in the nominative singular. The word is a group 1 noun, which ends with -а	NO	1	NOMINATIVE_PLURAL
