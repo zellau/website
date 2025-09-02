@@ -14,7 +14,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
     <script>
       class Problem {
-        constructor(russian_sentence, english_translation, word, answer, explanation, animate, group, answer_declension) {
+        constructor(russian_sentence, english_translation, word, answer, explanation, animate, group, answer_declension, dcase, number) {
           this.russian_sentence = russian_sentence;
           this.english_translation = english_translation;
           this.word = word;
@@ -23,6 +23,8 @@
           this.animate = animate;
           this.group = group;
           this.answer_declension = answer_declension;
+          this.dcase = dcase;
+          this.number = number;
         }
       }
 
@@ -63,14 +65,16 @@
         problemSet = new Array(objects.length - 1);
         for (var i=1; i<objects.length; i++) {
           var data = objects[i].split('\t');
-          var problem = new Problem(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7]);
+          var problem = new Problem(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], data[9]);
           problemSet[i -1] = problem;
         }
       }
 
       function resetProblem() {
-        var newProblemIndex = Math.floor(Math.random() * problemSet.length);
-        russian_problem = problemSet[newProblemIndex];
+        var filteredProblems = problemSet.filter(checkNumber).filter(checkCase).filter(checkGroup);
+        //alert(filteredProblems.length)
+        var newProblemIndex = Math.floor(Math.random() * filteredProblems.length);
+        russian_problem = filteredProblems[newProblemIndex];
 
         var inputStart = "<ruby><form action='javascript:;' onsubmit='checkWork()'><input autocomplete='off' type='text' id='entry'></input></form><rt>";
         var inputEnd = "</rt></ruby>"
@@ -93,6 +97,41 @@
         var hintbox = document.getElementById("hint");
         hintbox.style = "text-align:left;";
         hintbox.innerHTML = "";
+      }
+
+      function checkNumber(problem) {
+        var singularOkay = document.getElementById("sing").checked; 
+        var pluralOkay = document.getElementById("plur").checked;
+        var singular = singularOkay && problem.number.trim() == "SINGULAR";
+        var plural = pluralOkay && problem.number.trim() == "PLURAL";
+        return singular || plural;
+      }
+
+      function checkCase(problem) {
+        var nomOkay = document.getElementById("nom").checked; 
+        var accOkay = document.getElementById("acc").checked;
+        var genOkay = document.getElementById("gen").checked; 
+        var datOkay = document.getElementById("dat").checked;
+        var prepOkay = document.getElementById("prep").checked; 
+        var instOkay = document.getElementById("inst").checked;
+
+        var nom = nomOkay && problem.dcase.trim() == "NOMINATIVE";
+        var acc = accOkay && problem.dcase.trim() == "ACCUSATIVE";
+        var gen = genOkay && problem.dcase.trim() == "GENITIVE";
+        var dat = datOkay && problem.dcase.trim() == "DATIVE";
+        var prep = prepOkay && problem.dcase.trim() == "PREPOSITIONAL";
+        var inst = instOkay && problem.dcase.trim() == "INSTRUMENTAL";
+        return nom || acc || gen || dat || prep || inst;
+      }
+
+      function checkGroup(problem) {
+        var oneOkay = document.getElementById("g1").checked; 
+        var twoOkay = document.getElementById("g2").checked;
+        var threeOkay = document.getElementById("g3").checked;
+        var one = oneOkay && problem.group.trim() == "1";
+        var two = twoOkay && problem.group.trim() == "2";
+        var three = threeOkay && problem.group.trim() == "3";
+        return one || two || three;
       }
 
       function checkWork() {
