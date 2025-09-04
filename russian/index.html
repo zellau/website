@@ -76,7 +76,7 @@
         var newProblemIndex = Math.floor(Math.random() * filteredProblems.length);
         russian_problem = filteredProblems[newProblemIndex];
 
-        var inputStart = "<ruby><form action='javascript:;' onsubmit='checkWork()'><input autocomplete='off' type='text' id='entry'></input></form><rt>";
+        var inputStart = "<ruby><form action='javascript:;' onsubmit='checkWork()'><input autocomplete='off' type='text' id='entry' tabindex='-1'></input></form><rt>";
         var inputEnd = "</rt></ruby>"
         var input = inputStart + russian_problem.word + inputEnd;
 
@@ -97,6 +97,8 @@
         var hintbox = document.getElementById("hint");
         hintbox.style = "text-align:left;";
         hintbox.innerHTML = "";
+
+        document.getElementById("entry").focus();
       }
 
       function checkNumber(problem) {
@@ -139,11 +141,12 @@
         var x = document.getElementById("entry").value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
         if (x == russian_problem.answer.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()) {
           feedbackBox.style = "background-color:#00DD0010;border-color:#00DD00;border-width:2px;border-style:solid;padding:15px;border-radius:15px"
-          feedbackBox.innerHTML = "<p style='color:#00DD00;'><b>Correct!</b></p><p style='color:#00DD00;'>" + russian_problem.explanation + " -- " + russian_problem.answer +"!</p><button style='margin:auto;display:block;' id='newWordButton' onclick='resetProblem();'>New Word!</button>"
+          feedbackBox.innerHTML = "<p style='color:#00DD00;'><b>Correct!</b></p><p style='color:#00DD00;'>" + russian_problem.explanation + " -- " + russian_problem.answer +"!</p><button style='margin:auto;display:block;' id='newWordButton' onclick='resetProblem();' tabindex='-1'>New Word!</button>"
         } else {
           feedbackBox.style = "background-color:#FF000020;border-color:#FF0000;border-width:2px;border-style:solid;padding:15px;border-radius:15px"
-          feedbackBox.innerHTML = "<p style='color:#FF0000;'><b>Incorrect!</b></p><p style='color:#FF0000;'>" + russian_problem.explanation + " -- " + russian_problem.answer +"!</p><button style='margin:auto;display:block;' id='newWordButton' onclick='resetProblem();'>New Word!</button>"
+          feedbackBox.innerHTML = "<p style='color:#FF0000;'><b>Incorrect!</b></p><p style='color:#FF0000;'>" + russian_problem.explanation + " -- " + russian_problem.answer +"!</p><button style='margin:auto;display:block;' id='newWordButton' onclick='resetProblem();' tabindex='-1'>New Word!</button>"
         }
+        document.getElementById("newWordButton").focus();
       }
 
       function giveHint() {
@@ -172,7 +175,7 @@
             <tr><td>Nominative</td><td>--</td><td>-о</td><td>-ы</td><td>-а</td></tr>
             <tr><td>Accusative</td><td><a title='inanimate'>--</a>/<a title='animate'>-а</a></td><td>-о</td><td><a title='inanimate'>-ы</a>/<a title='animate'>-ов/-ей</a></td><td><a title='inanimate'>-а</a>/<a title='animate'>--</a></td></tr>
             <tr><td>Genitive</td><td>-а</td><td>-а</td><td>-ов/-ей</td><td>--</td></tr>
-            <tr><td>Dative</td><td>-ы</td><td>-ы</td><td>-ам</td><td>-ам</td></tr>
+            <tr><td>Dative</td><td>-у</td><td>-у</td><td>-ам</td><td>-ам</td></tr>
             <tr><td>Prepositional</td><td>-е</td><td>-е</td><td>-ах</td><td>-ах</td></tr>
             <tr><td>Instrumental</td><td>-ом</td><td>-ом</td><td>-ами</td><td>-ами</td></tr>
           </tbody>
