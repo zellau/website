@@ -138,8 +138,8 @@
 
       function checkWork() {
         var feedbackBox = document.getElementById("feedback");
-        var x = document.getElementById("entry").value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-        if (x == russian_problem.answer.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()) {
+        var x = document.getElementById("entry").value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+        if (x == russian_problem.answer.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim()) {
           feedbackBox.style = "background-color:#00DD0010;border-color:#00DD00;border-width:2px;border-style:solid;padding:15px;border-radius:15px"
           feedbackBox.innerHTML = "<p style='color:#00DD00;'><b>Correct!</b></p><p style='color:#00DD00;'>" + russian_problem.explanation + " -- " + russian_problem.answer +"!</p><button style='margin:auto;display:block;' id='newWordButton' onclick='resetProblem();' tabindex='-1'>New Word!</button>"
         } else {
