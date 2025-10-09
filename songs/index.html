@@ -73,7 +73,25 @@
           window.scrollTo({
             top: $($(".song")[$random]).offset().top,
             left: 0,
+          });
         });
+      });
+
+      $(function(){
+        document.addEventListener('keydown', (e) => {
+          if (e.code === 'Space') {
+            $(".verse-start").each(function(){ //TODO: change id
+              e.preventDefault();
+              $top = $(this).offset().top
+              if ($top > window.scrollY + 10) {
+                window.scrollTo({
+                  top: $(this).offset().top,
+                  left: 0,
+                });
+                return false;
+              }
+            });
+          }
         });
       });
     </script> 
