@@ -75,14 +75,9 @@
 		  }
 		})(window._W && _W.jQuery)
 	</script>
-	<script> 
-      $(function(){
-        $("#headerFile").load("_header.html"); 
-      });
-    </script> 
   </head>
   <body class='no-header-page wsite-theme-light wsite-page-portfolio'>
-    <div id="headerFile"></div>
+    <?php include '_header.html'; ?>
 	<div id="main-wrap">
 	  <div class="container">
 	    <h1 style="text-align:left;">Projects</h1>
@@ -94,7 +89,7 @@
 				<div id='183413010428677461-insideImageContainer0' style='position:relative;margin:5px;'>
 				  <div class='galleryImageHolder' style='position:relative; width:100%; padding:0 0 100%;overflow:hidden;'>
 					<div class='galleryInnerImageHolder'>
-					  <input type="image" id="image0" onclick="expandBlurb(this)" src='/uploads/3/6/1/4/3614877/348503.png' class='galleryImage' _width='192' _height='192' style='position:absolute;border:0;width:100%;top:0%;left:0%' />
+					  <input type="image" id="image0" onclick="expandBlurb(this)" src='/files/pictures/studio.png' class='galleryImage' _width='192' _height='192' style='position:absolute;border:0;width:100%;top:0%;left:0%' />
 					</div>
 				  </div>
 				</div>
@@ -104,7 +99,7 @@
 			    <div id='183413010428677461-insideImageContainer1' style='position:relative;margin:5px;'>
 				  <div class='galleryImageHolder' style='position:relative; width:100%; padding:0 0 100%;overflow:hidden;'>
 					<div class='galleryInnerImageHolder'>
-					  <input type="image" id="image1" onclick="expandBlurb(this)" src='/uploads/3/6/1/4/3614877/2948212.png' class='galleryImage' _width='250' _height='250' style='position:absolute;border:0;width:100%;top:0%;left:0%' />
+					  <input type="image" id="image1" onclick="expandBlurb(this)" src='/files/pictures/mizbee.png' class='galleryImage' _width='250' _height='250' style='position:absolute;border:0;width:100%;top:0%;left:0%' />
 					</div>
 				  </div>
 				</div>
@@ -113,7 +108,7 @@
 			    <div id='183413010428677461-insideImageContainer2' style='position:relative;margin:5px;'>
 				  <div class='galleryImageHolder' style='position:relative; width:100%; padding:0 0 100%;overflow:hidden;'>
 				  	<div class='galleryInnerImageHolder'>
-					  <input type="image" id="image2" onclick="expandBlurb(this)" src='/uploads/3/6/1/4/3614877/2827196.png' class='galleryImage' _width='250' _height='250' style='position:absolute;border:0;width:100%;top:0%;left:0%' />
+					  <input type="image" id="image2" onclick="expandBlurb(this)" src='/files/pictures/weather.png' class='galleryImage' _width='250' _height='250' style='position:absolute;border:0;width:100%;top:0%;left:0%' />
 				    </div>
 			      </div>
 			    </div>

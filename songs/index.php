@@ -13,6 +13,10 @@
       .container { padding-left:50; }
       .song { display:none; }
       li { display:none; }
+      @media print {
+        h2 { break-before: page; }
+        audio { display: none !important; }
+      }
       #song-filter:has(option[value="all"]:checked) ~ ul li { display:list-item; }
       #song-filter:has(option[value="all"]:checked) ~ .song { display:inherit; }
 
@@ -48,22 +52,20 @@
 
       #song-filter:has(option[value="halloween-song"]:checked) ~ .halloween-song { display:inherit; }
       #song-filter:has(option[value="halloween-song"]:checked) ~ ul li.halloween-song { display:list-item; }
+
+      #song-filter:has(option[value="pirate-song"]:checked) ~ .pirate-song { display:inherit; }
+      #song-filter:has(option[value="pirate-song"]:checked) ~ ul li.pirate-song { display:list-item; }
     </style>
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
     <script> 
-      $(function(){
-        $("#headerFile").load("../_header.html"); 
-      });
-    </script>
-    <script> 
-      $(function(){
-        $(".song").each(function(){
-          $title = $(this).attr('id');
-          $(this).append($('<div>').load($title+".html"));
-          $(this).append("<p>[<a href ='#song-filter'>Back to Top</a>]</p>");
-        });
-      });
+      // $(function(){
+      //   $(".song").each(function(){
+      //     $title = $(this).attr('id');
+      //     $(this).append($('<div>').load($title+".html"));
+      //     $(this).append("<p>[<a href ='#song-filter'>Back to Top</a>]</p>");
+      //   });
+      // });
 
       $(function(){
         $("button").click(function(){
@@ -97,7 +99,7 @@
     </script> 
   </head>
   <body>
-    <div id="headerFile"></div>
+    <?php include '../_header.html'; ?>
     <div id="main-wrap">
       <div class="container">
         <div id="song-filter">
@@ -115,6 +117,7 @@
             <option value="hfy-song">HFY Songs</option>
             <option value="abundance-song">Abundance Songs</option>
             <option value="halloween-song">Halloween Songs</option>
+            <option value="pirate-song">Pirate Songs</option>
             <!--<option value="winter-song">Winter Songs</option>
             <option value="silly-song">Silly Songs</option>
             <option value="nature-song">Nature Songs</option>
@@ -179,59 +182,77 @@
           <!--<li class="halloween-song"><a href ="#creepy-doll">Creepy Doll</a></li>-->
           <li><a href ="#me-against-the-world">Me Against the World</a></li>
           <li class="fandom-song"><a href ="#morethanitseems">More Than It Seems</a></li>
+          <li class="pirate-song"><a href ="#mermaid">The Mermaid</a></li>
+          <li class="pirate-song"><a href ="#grog">All For Me Grog</a></li>
+          <li class="pirate-song"><a href ="#strikethebell">Strike the Bell</a></li>
+          <li class="pirate-song"><a href ="#santiana">Santiana</a></li>
+          <li class="pirate-song"><a href ="#southaustralia">South Australia</a></li>
+          <li class="pirate-song"><a href ="#haulawayjoe">Haul Away Joe</a></li>
+          <li class="pirate-song"><a href ="#promisedland">Bound for the Promised Land</a></li>
+          <li class="pirate-song"><a href ="#drunkensailor">Up She Rises</a></li>
+          <li class="pirate-song"><a href ="#nelsons-blood">Nelson's Blood</a></li>
         </ul>
         <br />
-        <div class="song" id="failure"></div>
-        <div class="song love-song breakup-song" id="hallelujah"></div>
-        <div class="song halloween-song" id="grimgrinningghosts"></div>
-        <div class="song love-song" id="canthelp"></div>
-        <div class="song love-song" id="bookoflove"></div>
-        <div class="song homestuck-song fandom-song" id="8r8k"></div>
-        <div class="song breakup-song" id="irony"></div>
-        <div class="song mlp-song fandom-song" id="giggleattheghosties"></div>
-        <div class="song love-song" id="mothlovesong"></div>
-        <div class="song" id="welcometomylife"></div>
-        <div class="song blue-song" id="blueworld"></div>
-        <div class="song space-song nature-song" id="sunshine"></div>
-        <div class="song love-song" id="mexicanwrestler"></div>
-        <div class="song" id="demons"></div>
-        <div class="song hfy-song" id="breakingstrain"></div>
-        <div class="song homestuck-song fandom-song" id="over"></div>
-        <div class="song" id="whativedone"></div>
-        <div class="song halloween-song" id="undead"></div>
-        <div class="song hfy-song" id="smallpoxgone"></div>
-        <div class="song" id="monster"></div>
-        <div class="song blue-song" id="bluesky"></div>
-        <div class="song mlp-song fandom-song" id="lullabyforaprincess"></div>
-        <div class="song winter-song space-song nature-song" id="boldorion"></div>
-        <div class="song fandom-song" id="carryon"></div>
-        <div class="song love-song breakup-song" id="neverbethesame"></div>
-        <div class="song blue-song" id="mymyheyhey"></div>
-        <div class="song love-song breakup-song" id="comeback"></div>
-        <div class="song" id="closetoheaven"></div>
-        <div class="song halloween-song" id="evil"></div>
-        <div class="song hfy-song space-song" id="iss"></div>
-        <div class="song blue-song fandom-song" id="bluelips"></div>
-        <div class="song" id="untitled"></div>
-        <div class="song space-song hfy-song" id="fireinthesky"></div>
-        <div class="song homestuck-song fandom-song" id="temporalshenanigans"></div>
-        <div class="song abundance-song nature-song" id="georgiansong"></div>
-        <div class="song" id="injection"></div>
-        <div class="song halloween-song" id="terrortimeagain"></div>
-        <div class="song fandom-song homestuck-song" id="midnightcrew"></div>
-        <div class="song abundance-song hfy-song" id="landsailor"></div>
-        <div class="song" id="fairytale"></div>
-        <div class="song" id="hoboslullaby"></div>
-        <div class="song space-song" id="lightship"></div>
-        <div class="song" id="withoutyou"></div>
-        <div class="song blue-song" id="bluefornoreason"></div>
-        <div class="song" id="doginatrenchcoat"></div>
-        <div class="song" id="swinglifeaway"></div>
-        <div class="song homestuck-song fandom-song" id="t1ckt0ck"></div>
-        <div class="song" id="jerusalem"></div>
-        <div class="song halloween-song" id="spookyscaryskeletons"></div>
-        <div class="song" id="meagainsttheworld"></div>
-        <div class="song" id="morethanitseems"></div>
+        <div class="song" id="failure"><?php include 'failure.html'; ?></div>
+        <div class="song love-song breakup-song" id="hallelujah"><?php include 'hallelujah.html'; ?></div>
+        <div class="song halloween-song" id="grimgrinningghosts"><?php include 'grimgrinningghosts.html'; ?></div>
+        <div class="song love-song" id="canthelp"><?php include 'canthelp.html'; ?></div>
+        <div class="song love-song" id="bookoflove"><?php include 'bookoflove.html'; ?></div>
+        <div class="song homestuck-song fandom-song" id="8r8k"><?php include '8r8k.html'; ?></div>
+        <div class="song breakup-song" id="irony"><?php include 'irony.html'; ?></div>
+        <div class="song mlp-song fandom-song" id="giggleattheghosties"><?php include 'giggleattheghosties.html'; ?></div>
+        <div class="song love-song" id="mothlovesong"><?php include 'mothlovesong.html'; ?></div>
+        <div class="song" id="welcometomylife"><?php include 'welcometomylife.html'; ?></div>
+        <div class="song blue-song" id="blueworld"><?php include 'blueworld.html'; ?></div>
+        <div class="song space-song nature-song" id="sunshine"><?php include 'sunshine.html'; ?></div>
+        <div class="song love-song" id="mexicanwrestler"><?php include 'mexicanwrestler.html'; ?></div>
+        <div class="song" id="demons"><?php include 'demons.html'; ?></div>
+        <div class="song hfy-song" id="breakingstrain"><?php include 'breakingstrain.html'; ?></div>
+        <div class="song homestuck-song fandom-song" id="over"><?php include 'over.html'; ?></div>
+        <div class="song" id="whativedone"><?php include 'whativedone.html'; ?></div>
+        <div class="song halloween-song" id="undead"><?php include 'undead.html'; ?></div>
+        <div class="song hfy-song" id="smallpoxgone"><?php include 'smallpoxgone.html'; ?></div>
+        <div class="song" id="monster"><?php include 'monster.html'; ?></div>
+        <div class="song blue-song" id="bluesky"><?php include 'bluesky.html'; ?></div>
+        <div class="song mlp-song fandom-song" id="lullabyforaprincess"><?php include 'lullabyforaprincess.html'; ?></div>
+        <div class="song winter-song space-song nature-song" id="boldorion"><?php include 'boldorion.html'; ?></div>
+        <div class="song fandom-song" id="carryon"><?php include 'carryon.html'; ?></div>
+        <div class="song love-song breakup-song" id="neverbethesame"><?php include 'neverbethesame.html'; ?></div>
+        <div class="song blue-song" id="mymyheyhey"><?php include 'mymyheyhey.html'; ?></div>
+        <div class="song love-song breakup-song" id="comeback"><?php include 'comeback.html'; ?></div>
+        <div class="song" id="closetoheaven"><?php include 'closetoheaven.html'; ?></div>
+        <div class="song halloween-song" id="evil"><?php include 'evil.html'; ?></div>
+        <div class="song hfy-song space-song" id="iss"><?php include 'iss.html'; ?></div>
+        <div class="song blue-song fandom-song" id="bluelips"><?php include 'bluelips.html'; ?></div>
+        <div class="song" id="untitled"><?php include 'untitled.html'; ?></div>
+        <div class="song space-song hfy-song" id="fireinthesky"><?php include 'fireinthesky.html'; ?></div>
+        <div class="song homestuck-song fandom-song" id="temporalshenanigans"><?php include 'temporalshenanigans.html'; ?></div>
+        <div class="song abundance-song nature-song" id="georgiansong"><?php include 'georgiansong.html'; ?></div>
+        <div class="song" id="injection"><?php include 'injection.html'; ?></div>
+        <div class="song halloween-song" id="terrortimeagain"><?php include 'terrortimeagain.html'; ?></div>
+        <div class="song fandom-song homestuck-song" id="midnightcrew"><?php include 'midnightcrew.html'; ?></div>
+        <div class="song abundance-song hfy-song" id="landsailor"><?php include 'landsailor.html'; ?></div>
+        <div class="song" id="fairytale"><?php include 'fairytale.html'; ?></div>
+        <div class="song" id="hoboslullaby"><?php include 'hoboslullaby.html'; ?></div>
+        <div class="song space-song" id="lightship"><?php include 'lightship.html'; ?></div>
+        <div class="song" id="withoutyou"><?php include 'withoutyou.html'; ?></div>
+        <div class="song blue-song" id="bluefornoreason"><?php include 'bluefornoreason.html'; ?></div>
+        <div class="song" id="doginatrenchcoat"><?php include 'doginatrenchcoat.html'; ?></div>
+        <div class="song" id="swinglifeaway"><?php include 'swinglifeaway.html'; ?></div>
+        <div class="song homestuck-song fandom-song" id="t1ckt0ck"><?php include 't1ckt0ck.html'; ?></div>
+        <div class="song" id="jerusalem"><?php include 'jerusalem.html'; ?></div>
+        <div class="song halloween-song" id="spookyscaryskeletons"><?php include 'spookyscaryskeletons.html'; ?></div>
+        <div class="song" id="meagainsttheworld"><?php include 'meagainsttheworld.html'; ?></div>
+        <div class="song fandom-song" id="morethanitseems"><?php include 'morethanitseems.html'; ?></div>
+        <div class="song pirate-song" id="mermaid"><?php include 'mermaid.html'; ?></div>
+        <div class="song pirate-song" id="grog"><?php include 'grog.html'; ?></div>
+        <div class="song pirate-song" id="strikethebell"><?php include 'strikethebell.html'; ?></div>
+        <div class="song pirate-song" id="santiana"><?php include 'santiana.html'; ?></div>
+        <div class="song pirate-song" id="southaustralia"><?php include 'southaustralia.html'; ?></div>
+        <div class="song pirate-song" id="haulawayjoe"><?php include 'haulawayjoe.html'; ?></div>
+        <div class="song pirate-song" id="promisedland"><?php include 'promisedland.html'; ?></div>
+        <div class="song pirate-song" id="drunkensailor"><?php include 'drunkensailor.html'; ?></div>
+        <div class="song pirate-song" id="nelsonsblood"><?php include 'nelsonsblood.html'; ?></div>
       </div>
     </div>
   </body>

@@ -14,14 +14,9 @@
   
     <link rel='stylesheet' type='text/css' href='/files/main_style.css?1442930302' title='wsite-theme-css' />
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
-    <script> 
-      $(function(){
-        $("#headerFile").load("_header.html"); 
-      });
-    </script> 
   </head>
   <body class='no-header-page wsite-theme-light wsite-page-index'>
-    <div id="headerFile"></div>
+    <?php include '_header.html'; ?>
     <div id="main-wrap">
       <div class="container">
         ONCE there was a man and a woman with three beautiful daughters. The man and the woman did their best to take care of their daughters, but they weren't very good at listening to them. Their youngest daughter was sweet and gentle and looked up to her sisters and her mother and wanted to be just like them. Unfortunately, her parents were under the impression that she was a boy called Cinder.

@@ -6,11 +6,6 @@
   
     <link rel='stylesheet' type='text/css' href='/files/main_style.css?1442930302' title='wsite-theme-css' />
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
-    <script> 
-      $(function(){
-        $("#headerFile").load("_header.html"); 
-      });
-    </script> 
     <script type='text/javascript'>
 	  var currentSelection="none";
 	  function expandBlurb(clicked){
@@ -73,7 +68,7 @@
 	</script>
   </head>
   <body class='no-header-page wsite-theme-light wsite-page-index'>
-    <div id="headerFile"></div>
+    <?php include '_header.html'; ?>
     <div id="main-wrap">
       <div class="container">
         <div id='gallery' class='imageGallery' style='line-height: 0px; padding: 0; margin: 0;'>

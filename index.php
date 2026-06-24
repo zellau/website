@@ -2,26 +2,15 @@
 <html>
   <head>
     <title>Zella Urquhart - Home</title>
-    <meta property='og:site_name' content='Zella Urquhart' />
-    <meta property='og:title' content='Zella Urquhart' />
-    <meta property='og:description' content='...' />
-    <meta property='og:url' content='http://zellaurquhart.com/' />
-
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
     <script src="/files/theme/parallax.js"></script>
     <script src="/files/theme/img.js"></script>
   
     <link rel='stylesheet' type='text/css' href='/files/main_style.css?1442930302' title='wsite-theme-css' />
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
-    <script> 
-      $(function(){
-        $("#headerFile").load("_header.html"); 
-      });
-    </script> 
   </head>
   <body class='no-header-page wsite-theme-light wsite-page-index'>
-    <div id="headerFile"></div>
+    <?php include '_header.html'; ?>
     <div id="main-wrap">
       <div class="container">
         <img src="/files/pictures/zella-at-solstice.jpg" alt="Picture" style="width:auto;max-width:50%;float:left; margin:0 10px 0 10px;" />

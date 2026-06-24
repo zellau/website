@@ -13,15 +13,10 @@
     <script src="/files/theme/img.js"></script>
   
     <link rel='stylesheet' type='text/css' href='/files/main_style.css?1442930302' title='wsite-theme-css' />
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
-    <script> 
-      $(function(){
-        $("#headerFile").load("_header.html"); 
-      });
-    </script> 
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" /> 
   </head>
   <body class='no-header-page wsite-theme-light wsite-page-index'>
-    <div id="headerFile"></div>
+    <?php include '_header.html'; ?>
     <div id="main-wrap">
       <div class="container">
         <p>About a year ago, I started supplementing magnesium. It's been literally life changing. I've been working on a lot of issues with my health – asthma, migraines, fibromyalgia – but if I could only keep one fix I think it would be this one.</p>
