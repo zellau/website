@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Street Is Loud — Car Noise in Seattle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Barlow+Condensed:wght@600;700;800&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<style>
+  :root{
+    --bg:#12141c;
+    --bg-panel:#1a1e2b;
+    --bg-panel-2:#20263a;
+    --amber:#ffb627;
+    --red:#e8482e;
+    --paper:#f3f1ea;
+    --muted:#8b93a8;
+    --grid:#2a3049;
+    --dashed:#3a4160;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--paper);
+    font-family:'Karla',sans-serif;
+    line-height:1.5;
+    overflow-x:hidden;
+  }
+  .wrap{max-width:1040px;margin:0 auto;padding:0 24px;}
+
+  .noise-bg{
+    position:fixed;inset:0;pointer-events:none;z-index:0;opacity:0.035;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .eyebrow{
+    font-family:'Space Mono',monospace;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    font-size:12.5px;
+    color:var(--amber);
+    display:flex;align-items:center;gap:10px;
+  }
+  .eyebrow::before{
+    content:"";width:8px;height:8px;border-radius:50%;
+    background:var(--amber);
+  }
+
+  .hero{
+    position:relative;z-index:1;
+    padding:64px 0 40px;
+    display:grid;
+    grid-template-columns:1.3fr 1fr;
+    gap:40px;
+    align-items:center;
+  }
+  h1.headline{
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:800;
+    font-size:clamp(48px,7vw,84px);
+    line-height:0.95;
+    margin:14px 0 18px;
+    letter-spacing:-0.01em;
+    text-transform:uppercase;
+  }
+  h1.headline em{
+    font-style:normal;
+    color:var(--amber);
+  }
+  .hero p.lede{
+    font-size:18px;
+    color:var(--muted);
+    max-width:46ch;
+    margin:0;
+  }
+  .hero p.lede strong{color:var(--paper);}
+
+  /* ---------- Snapshot stat row (Last Night / This Week section) ---------- */
+  .snapshot{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:1px;
+    background:var(--grid);
+    border:1px solid var(--grid);
+    border-radius:14px;
+    overflow:hidden;
+    margin-bottom:20px;
+  }
+  .snapshot .s{
+    background:var(--bg-panel);
+    padding:22px 18px;
+    text-align:center;
+  }
+  .snapshot .s .n{
+    font-family:'Space Mono',monospace;font-weight:700;
+    font-size:clamp(22px,3vw,28px);color:var(--paper);
+  }
+  .snapshot .s .n small{font-size:13px;color:var(--muted);font-weight:400;}
+  .snapshot .s .l{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.3;}
+  @media (max-width:700px){ .snapshot{grid-template-columns:repeat(2,1fr);} }
+
+  .gauge-card{
+    background:var(--bg-panel);
+    border:1px solid var(--grid);
+    border-radius:14px;
+    padding:22px 20px 18px;
+    text-align:center;
+  }
+  .gauge-label-top{
+    font-family:'Space Mono',monospace;
+    font-size:11px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+  #gaugeSvg{width:100%;max-width:280px;margin:6px auto -10px;display:block;}
+  .gauge-reading{
+    font-family:'Space Mono',monospace;
+    font-weight:700;
+    font-size:42px;
+    color:var(--amber);
+    margin-top:-6px;
+  }
+  .gauge-reading span{font-size:18px;color:var(--muted);}
+  .gauge-caption{
+    font-size:13.5px;color:var(--muted);margin-top:4px;
+  }
+
+  .stat-strip{
+    position:relative;z-index:1;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:1px;
+    background:var(--grid);
+    border:1px solid var(--grid);
+    border-radius:14px;
+    overflow:hidden;
+    margin:8px 0 56px;
+  }
+  .stat-strip.four-col{grid-template-columns:repeat(4,1fr);}
+  .stat{
+    background:var(--bg-panel);
+    padding:26px 20px;
+    text-align:center;
+  }
+  .stat .num{
+    font-family:'Space Mono',monospace;
+    font-weight:700;
+    font-size:clamp(26px,3.4vw,34px);
+    color:var(--paper);
+  }
+  .stat .num small{font-size:14px;color:var(--muted);font-weight:400;}
+  .stat .num.zero{color:var(--red);}
+  .stat .lbl{
+    font-size:12.5px;color:var(--muted);margin-top:6px;
+    line-height:1.35;
+  }
+
+  section{position:relative;z-index:1;margin-bottom:64px;}
+  .section-head{
+    display:flex;align-items:baseline;gap:14px;margin-bottom:6px;
+    border-top:1px dashed var(--dashed);
+    padding-top:18px;
+  }
+  .section-num{
+    font-family:'Space Mono',monospace;
+    color:var(--amber);font-size:13px;
+  }
+  h2{
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:700;
+    text-transform:uppercase;
+    font-size:30px;
+    letter-spacing:.01em;
+    margin:0;
+  }
+  .section-copy{
+    color:var(--muted);
+    font-size:16px;
+    max-width:70ch;
+    margin:8px 0 24px;
+  }
+  .section-copy strong{color:var(--paper);}
+  .chart-card{
+    background:var(--bg-panel);
+    border:1px solid var(--grid);
+    border-radius:14px;
+    padding:20px 20px 8px;
+  }
+  .chart-card canvas{max-height:320px;}
+
+  .two-col{display:grid;grid-template-columns:1.4fr 1fr;gap:20px;}
+  @media (max-width:760px){
+    .hero{grid-template-columns:1fr;}
+    .stat-strip{grid-template-columns:repeat(2,1fr);}
+    .two-col{grid-template-columns:1fr;}
+  }
+
+  .tickets{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+  }
+  @media (max-width:900px){.tickets{grid-template-columns:1fr;}}
+  .ticket{
+    position:relative;
+    background:var(--bg-panel);
+    border:1.5px dashed var(--dashed);
+    border-radius:4px;
+    padding:20px 20px 22px;
+  }
+  .ticket::before,.ticket::after{
+    content:"";position:absolute;width:18px;height:18px;
+    background:var(--bg);border:1.5px dashed var(--dashed);
+    border-radius:50%;top:50%;transform:translateY(-50%);
+  }
+  .ticket::before{left:-10px;}
+  .ticket::after{right:-10px;}
+  .ticket-no{
+    font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);
+    display:flex;justify-content:space-between;
+    border-bottom:1px dashed var(--dashed);
+    padding-bottom:10px;margin-bottom:12px;
+    letter-spacing:.05em;
+  }
+  .ticket-no .stamp{color:var(--red);font-weight:700;}
+  .ticket h3{
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:21px;text-transform:uppercase;font-weight:700;
+    margin:0 0 8px;color:var(--amber);
+    letter-spacing:.01em;
+  }
+  .ticket .big{
+    font-family:'Space Mono',monospace;font-weight:700;
+    font-size:30px;color:var(--paper);margin-bottom:2px;
+  }
+  .ticket .big small{font-size:14px;color:var(--muted);font-weight:400;}
+  .ticket p{font-size:14px;color:var(--muted);margin:8px 0 0;}
+  .ticket p a{color:var(--amber);}
+  .ticket .meta{
+    font-family:'Space Mono',monospace;font-size:11.5px;color:var(--muted);
+    margin-top:14px;padding-top:10px;border-top:1px dashed var(--dashed);
+    display:flex;justify-content:space-between;
+  }
+
+  /* ---------- Enforcement scorecard ---------- */
+  .scorecard{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:1px;
+    background:var(--grid);
+    border:1px solid var(--grid);
+    border-radius:14px;
+    overflow:hidden;
+    margin-bottom:22px;
+  }
+  @media (max-width:760px){.scorecard{grid-template-columns:repeat(2,1fr);}}
+  .scorecard .stat{padding:24px 18px;}
+
+  footer{
+    position:relative;z-index:1;
+    border-top:1px dashed var(--dashed);
+    padding:28px 0 70px;
+    color:var(--muted);
+    font-size:13.5px;
+  }
+  footer a{color:var(--amber);}
+  footer p{max-width:78ch;}
+
+  .load-error{
+    background:var(--bg-panel);
+    border:1px solid var(--red);
+    border-radius:10px;
+    padding:20px 22px;
+    color:var(--paper);
+    font-size:14.5px;
+    margin:24px 0;
+  }
+  .load-error code{
+    background:var(--bg-panel-2);
+    padding:1px 6px;
+    border-radius:4px;
+    font-family:'Space Mono',monospace;
+    font-size:13px;
+  }
+
+  .tooltip-note{font-size:12.5px;color:var(--muted);margin-top:8px;font-family:'Space Mono',monospace;}
+</style>
+</head>
+<body>
+<div class="noise-bg"></div>
+<div class="wrap">
+
+  <div class="hero">
+    <div>
+      <div class="eyebrow" id="eyebrowText">Seattle, WA</div>
+      <h1 class="headline">My street<br>is <em>loud.</em></h1>
+      <p class="lede">Seattle has laws against excessive vehicle noise. In practice, tickets for it are rare. So I started recording the evidence myself, one window-view video at a time &mdash; and calling it in, too.</p>
+    </div>
+    <div class="gauge-card">
+      <div class="gauge-label-top">Loudest single reading &mdash; past year</div>
+      <svg id="gaugeSvg" viewBox="0 0 280 170"></svg>
+      <div class="gauge-reading" id="gaugeReadingText">&mdash;<span> dB at the source</span></div>
+      <div class="gauge-caption" id="gaugeCaptionText">Loading&hellip;</div>
+    </div>
+  </div>
+
+  <div id="loadErrorContainer"></div>
+
+  <div class="stat-strip" id="statStrip"></div>
+
+  <section id="sec-snapshot">
+    <div class="section-head"><span class="section-num">01</span><h2 id="snapshotTitle">Last night</h2></div>
+    <p class="section-copy" id="snapshotCopy">Loading&hellip;</p>
+    <div class="snapshot" id="snapshotStatsRow"></div>
+    <div class="chart-card">
+      <canvas id="snapshotChart"></canvas>
+    </div>
+    <div class="tooltip-note" id="snapshotChartNote"></div>
+  </section>
+
+  <section id="sec-timeline">
+    <div class="section-head"><span class="section-num">02</span><h2>The past year, day by day</h2></div>
+    <p class="section-copy">Some days the street stayed quiet. Other days, cars roared by again and again. This line shows how much of <strong>each day</strong> is estimated to have been loud, over the last 12 months &mdash; the higher the spike, the noisier the day.</p>
+    <div class="chart-card">
+      <canvas id="timelineChart"></canvas>
+    </div>
+    <div class="tooltip-note">Hover or tap any point to see that day's numbers.</div>
+  </section>
+
+  <section id="sec-weekday">
+    <div class="section-head"><span class="section-num">03</span><h2>Weekends are the worst</h2></div>
+    <p class="section-copy" id="weekdayCopy">Loading&hellip;</p>
+    <div class="two-col">
+      <div class="chart-card"><canvas id="weekdayChart"></canvas></div>
+      <div class="chart-card"><canvas id="weekdayEventsChart"></canvas></div>
+    </div>
+    <div class="tooltip-note">Every day logged so far, not just the past year.</div>
+  </section>
+
+  <section id="sec-monthly">
+    <div class="section-head"><span class="section-num">04</span><h2>Is it getting worse?</h2></div>
+    <p class="section-copy" id="monthlyCopy">Loading&hellip;</p>
+    <div class="chart-card">
+      <canvas id="monthlyChart"></canvas>
+    </div>
+    <div class="tooltip-note">Every day logged so far, not just the past year.</div>
+  </section>
+
+  <section id="sec-tickets">
+    <div class="section-head"><span class="section-num">05</span><h2>Three loud moments</h2></div>
+    <p class="section-copy">If the street could get a ticket for noise, these moments from the past year would earn one.</p>
+    <div class="tickets" id="ticketsContainer"></div>
+  </section>
+
+  <section id="sec-police">
+    <div class="section-head"><span class="section-num">06</span><h2>Calling it in</h2></div>
+    <p class="section-copy" id="policeCopy">Loading&hellip;</p>
+    <div class="scorecard" id="policeScorecard"></div>
+    <p class="section-copy" id="policeCopy2"></p>
+  </section>
+
+  <footer>
+    <p><strong style="color:var(--paper)">How the noise was measured:</strong> most days, I recorded about an hour of video through my window, with a decibel reader running at the same time. I saved a clip when a car engine was audible in the video and either the decibel reader crossed 40 dB while it was audible and annoying, or I'd flagged in the moment that I could hear a vehicle and it bothered me. Clips are posted on my YouTube channel, <a href="https://www.youtube.com/@Zella-U" target="_blank" rel="noopener">@Zella-U</a>. The "estimated minutes/hours" figures scale that hour's rate up to a full day. Loud-moment counts are never scaled &mdash; they're the exact number I tagged by hand. The day-by-day chart, top numbers, and three loud moments cover the past 12 months; the day-of-week and month-over-month charts use every day logged so far.</p>
+    <p><strong style="color:var(--paper)">How the calls were logged:</strong> every time I called Seattle police's non-emergency line to report the noise, I logged the call, whether an officer ever responded, how long that took, and whether they found the vehicle.</p>
+    <p>This page reads its data live from <code style="background:var(--bg-panel);padding:1px 6px;border-radius:4px;font-family:'Space Mono',monospace;">noise-data.csv</code> and <code style="background:var(--bg-panel);padding:1px 6px;border-radius:4px;font-family:'Space Mono',monospace;">police-data.csv</code> in the same folder as this page. To update it, replace those files with new exports in the same format &mdash; no need to touch this page itself.</p>
+  </footer>
+
+</div>
+
+<script>
+const AMBER = '#ffb627';
+const RED = '#e8482e';
+const GRID = 'rgba(42,48,73,0.6)';
+const PAPER = '#f3f1ea';
+const wdOrder = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+
+// The off-schedule clip that isn't part of the systematic dataset (filmed
+// during the day, not as part of the regular bedtime routine).
+const BONUS_CLIP = { percent: 74.8, url: 'https://www.youtube.com/watch?v=hcL2G4T9ijA' };
+
+// The noise log's Date column has no year, so we anchor the first row to this
+// year and let the parser roll forward every time the month count wraps.
+const NOISE_DATA_START_YEAR = 2025;
+
+Chart.defaults.font.family = "'Karla', sans-serif";
+Chart.defaults.color = '#8b93a8';
+
+function parseTimeToSeconds(s){
+  if(s===undefined || s===null || s==='') return null;
+  s = String(s).trim();
+  let total = 0;
+  if(s.includes(':')){
+    const parts = s.split(':').map(Number);
+    if(parts.length===3) total = parts[0]*3600+parts[1]*60+parts[2];
+    else if(parts.length===2) total = parts[0]*60+parts[1];
+  } else {
+    const d = s.match(/(\d+)d/);
+    const h = s.match(/(\d+)h/);
+    const m = s.match(/(\d+)m(?!s)/);
+    const sec = s.match(/(\d+)s/);
+    const ms = s.match(/(\d+)ms/);
+    if(d) total += parseInt(d[1])*86400;
+    if(h) total += parseInt(h[1])*3600;
+    if(m) total += parseInt(m[1])*60;
+    if(sec) total += parseInt(sec[1]);
+    if(ms) total += parseInt(ms[1])/1000;
+  }
+  return total || (s==='0' ? 0 : total);
+}
+
+function fmtDate(y,m,d){
+  return new Date(y, m-1, d).toLocaleDateString('en-US',{month:'short', day:'numeric', year:'numeric'});
+}
+function isoDate(y,m,d){
+  return `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+}
+// Use local calendar date components, never toISOString() — that converts to
+// UTC, which silently shifts the date by one in the evening for any timezone
+// behind UTC (e.g. Seattle), right when this data tends to get logged.
+function localISO(d){
+  return isoDate(d.getFullYear(), d.getMonth()+1, d.getDate());
+}
+
+// The noise CSV's header row repeats some names (Time, #) for its weekly
+// summary columns, which makes name-based lookups ambiguous. We parse by
+// fixed column position instead, skipping the two header rows.
+const NOISE_COLS = { date:0, time:1, percent:2, events:3, longest:7, loudest:8, dbSource:9, dow:16 };
+
+function parseNoiseCSV(text){
+  const parsed = Papa.parse(text, {header:false, skipEmptyLines:true});
+  const rows = parsed.data.slice(2); // drop the two header rows
+  let year = NOISE_DATA_START_YEAR;
+  let prevMonth = null;
+  const records = [];
+  for(const row of rows){
+    const dateStr = row[NOISE_COLS.date], timeStr = row[NOISE_COLS.time];
+    if(!dateStr || !timeStr) continue;
+    const [mStr, dStr] = dateStr.split('/');
+    const month = parseInt(mStr), day = parseInt(dStr);
+    if(prevMonth !== null && month < prevMonth - 6) year += 1;
+    prevMonth = month;
+    const percent = parseFloat(row[NOISE_COLS.percent]);
+    if(isNaN(percent)) continue;
+    const eventsRaw = row[NOISE_COLS.events];
+    const loudestRaw = row[NOISE_COLS.loudest];
+    const dbSourceRaw = row[NOISE_COLS.dbSource];
+    const longestRaw = row[NOISE_COLS.longest];
+    records.push({
+      date: fmtDate(year, month, day),
+      iso: isoDate(year, month, day),
+      percent: Math.round(percent*100)/100,
+      estMinutes: Math.round(percent*14.4*10)/10,
+      events: eventsRaw ? parseInt(eventsRaw) : null,
+      loudest: loudestRaw ? parseFloat(loudestRaw) : null,
+      dbSource: dbSourceRaw ? parseFloat(dbSourceRaw) : null,
+      longest: longestRaw ? parseFloat(longestRaw) : null,
+      dow: row[NOISE_COLS.dow],
+    });
+  }
+  return records.sort((a,b)=> a.iso < b.iso ? -1 : 1);
+}
+
+function parsePoliceCSV(text){
+  const parsed = Papa.parse(text, {header:true, skipEmptyLines:true});
+  const records = [];
+  for(const row of parsed.data){
+    const m = (row.Time||'').match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+    if(!m) continue;
+    const month = parseInt(m[1]), day = parseInt(m[2]), year = parseInt(m[3]);
+    const responded = !!(row.Response && row.Response.trim());
+    const foundSomeone = (row['Did they find anyone?']||'').trim().toUpperCase() === 'YES';
+    records.push({
+      date: fmtDate(year, month, day),
+      iso: isoDate(year, month, day),
+      holdSec: parseTimeToSeconds(row['Time on hold']),
+      callSec: parseTimeToSeconds(row['Time on call']),
+      noisesHold: parseInt(row['# noises on hold']) || 0,
+      noisesCall: parseInt(row['# noises on call']) || 0,
+      responded,
+      foundSomeone,
+      responseSec: parseTimeToSeconds(row['Time from call to response']),
+    });
+  }
+  return records.sort((a,b)=> a.iso < b.iso ? -1 : 1);
+}
+
+function showLoadError(filename, err){
+  const el = document.createElement('div');
+  el.className = 'load-error';
+  el.innerHTML = `<strong>Couldn't load <code>${filename}</code>.</strong> Make sure this file is sitting in the same folder as this page, with the same column headers as before. (${err})`;
+  document.getElementById('loadErrorContainer').appendChild(el);
+}
+
+function sum(arr, fn){ return arr.reduce((s,d)=> s + (fn(d) ?? 0), 0); }
+function avg(arr, fn){ const vals = arr.map(fn).filter(v => v !== null && v !== undefined && !isNaN(v)); return vals.length ? vals.reduce((a,b)=>a+b,0)/vals.length : 0; }
+function fmt1(n){ return Math.round(n*10)/10; }
+
+function findMaxDays(arr, fn){
+  const vals = arr.map(fn).filter(v => v !== null && v !== undefined && !isNaN(v));
+  if(!vals.length) return {max:null, days:[]};
+  const max = Math.max(...vals);
+  const days = arr.filter(d => fn(d) === max);
+  return {max, days};
+}
+function dateList(days){
+  const dates = days.map(d=>d.date);
+  if(dates.length === 1) return dates[0];
+  if(dates.length === 2) return dates[0] + ' and ' + dates[1];
+  return dates.slice(0,-1).join(', ') + ', and ' + dates[dates.length-1];
+}
+
+/* ==================== SNAPSHOT: last night / this week ==================== */
+function snapshotStatsHTML(stats){
+  return stats.map(s=>`
+    <div class="s">
+      <div class="n">${s.num}${s.unit?` <small>${s.unit}</small>`:''}</div>
+      <div class="l">${s.lbl}</div>
+    </div>
+  `).join('');
+}
+
+function fillSnapshotSection(title, copy, stats){
+  document.getElementById('snapshotTitle').textContent = title;
+  document.getElementById('snapshotCopy').innerHTML = copy;
+  document.getElementById('snapshotStatsRow').innerHTML = snapshotStatsHTML(stats);
+}
+
+function renderLoudQuietPie(loudMinutes, totalMinutes, note){
+  const quietMinutes = Math.max(totalMinutes - loudMinutes, 0);
+  const pct = fmt1(loudMinutes/totalMinutes*100);
+
+  new Chart(document.getElementById('snapshotChart'), {
+    type:'pie',
+    data:{
+      labels:['Loud', 'Quiet'],
+      datasets:[{
+        data:[loudMinutes, quietMinutes],
+        backgroundColor:[RED, '#3a4160'],
+        borderColor:'#1a1e2b',
+        borderWidth:2,
+      }]
+    },
+    options:{
+      responsive:true,
+      plugins:{
+        legend:{
+          display:true, position:'right',
+          labels:{ color:'#8b93a8', boxWidth:12, font:{family:"'Space Mono', monospace", size:12}, padding:14 }
+        },
+        tooltip:{
+          backgroundColor:'#20263a', borderColor:'#2a3049', borderWidth:1, titleColor:PAPER, bodyColor:'#c7ccd9', padding:10,
+          callbacks:{ label: ctx => {
+            const mins = ctx.raw;
+            const hrs = fmt1(mins/60);
+            return `${ctx.label}: ~${Math.round(mins)} min (${hrs} hrs)`;
+          } }
+        }
+      }
+    }
+  });
+  document.getElementById('snapshotChartNote').textContent = `${pct}% loud \u00b7 ${note}`;
+}
+
+function renderSnapshot(daily){
+  const now = new Date();
+  const todayISO = localISO(now);
+  const yest = new Date(now); yest.setDate(yest.getDate()-1);
+  const yestISO = localISO(yest);
+
+  const lastNight = daily.find(d => d.iso === yestISO);
+
+  if(lastNight){
+    fillSnapshotSection(
+      'Last night',
+      `Last night (${lastNight.date}), <strong>${lastNight.percent}%</strong> of the watched hour was loud &mdash; an estimated ${lastNight.estMinutes} noisy minutes across the day` + (lastNight.loudest ? `, loudest at ${lastNight.loudest} dB (${lastNight.dbSource} dB at the source).` : '.'),
+      [
+        {num:lastNight.percent, unit:'%', lbl:'of the hour loud'},
+        {num:lastNight.estMinutes, unit:'min', lbl:'estimated for the day'},
+        {num:lastNight.events ?? '\u2014', unit:'', lbl:'loud moments'},
+        {num:lastNight.dbSource ?? '\u2014', unit:'dB', lbl:'loudest, at source'},
+      ]
+    );
+    renderLoudQuietPie(lastNight.estMinutes, 1440, `estimated for last night (${lastNight.date}).`);
+    return;
+  }
+
+  const weekStart = new Date(now); weekStart.setDate(weekStart.getDate()-6);
+  const weekStartISO = localISO(weekStart);
+  const weekRecords = daily.filter(d => d.iso >= weekStartISO && d.iso <= todayISO);
+
+  if(weekRecords.length){
+    const avgPct = fmt1(avg(weekRecords, d=>d.percent));
+    const totalMin = Math.round(sum(weekRecords, d=>d.estMinutes));
+    const totalEvents = Math.round(sum(weekRecords, d=>d.events));
+    const loudestInfo = findMaxDays(weekRecords, d=>d.dbSource);
+    const mostRecent = weekRecords[weekRecords.length-1];
+    fillSnapshotSection(
+      'This week',
+      `Nothing's logged yet from last night, but this week (${weekRecords[0].date}&ndash;${mostRecent.date}) averaged <strong>${avgPct}%</strong> of watched time loud, across ${weekRecords.length} of the last 7 nights.`,
+      [
+        {num:avgPct, unit:'%', lbl:'avg. of the hour loud'},
+        {num:totalMin, unit:'min', lbl:'estimated, this week'},
+        {num:totalEvents, unit:'', lbl:'loud moments'},
+        {num:loudestInfo.max ?? '\u2014', unit:'dB', lbl:'loudest, at source'},
+      ]
+    );
+    renderLoudQuietPie(totalMin, weekRecords.length*1440, `estimated across the ${weekRecords.length} logged nights this week.`);
+    return;
+  }
+
+  const last = daily[daily.length-1];
+  fillSnapshotSection(
+    'Most recent night on record',
+    `Nothing has been logged in the past week. The most recent entry is ${last.date}, when <strong>${last.percent}%</strong> of the watched hour was loud.`,
+    [
+      {num:last.percent, unit:'%', lbl:'of the hour loud'},
+      {num:last.estMinutes, unit:'min', lbl:'estimated for the day'},
+      {num:last.events ?? '\u2014', unit:'', lbl:'loud moments'},
+      {num:last.dbSource ?? '\u2014', unit:'dB', lbl:'loudest, at source'},
+    ]
+  );
+  renderLoudQuietPie(last.estMinutes, 1440, `estimated for ${last.date}, the most recent logged night.`);
+}
+
+/* ==================== NOISE DATA ==================== */
+function renderNoise(daily){
+  renderSnapshot(daily);
+
+  const latest = daily[daily.length-1];
+  const earliest = daily[0];
+  const latestDate = new Date(latest.iso + 'T00:00:00');
+  const cutoffDate = new Date(latestDate);
+  cutoffDate.setDate(cutoffDate.getDate() - 365);
+  const cutoffISO = localISO(cutoffDate);
+  const pastYear = daily.filter(d => d.iso >= cutoffISO);
+
+  document.getElementById('eyebrowText').textContent = `Seattle, WA \u00b7 logging since ${earliest.date}`;
+
+  const totalEstHours = fmt1(sum(pastYear, d=>d.estMinutes)/60);
+  const avgEstMinutesPerDay = fmt1(avg(pastYear, d=>d.estMinutes));
+  const avgPercent = fmt1(avg(pastYear, d=>d.percent));
+  const totalEvents = Math.round(sum(pastYear, d=>d.events));
+
+  const statStrip = document.getElementById('statStrip');
+  const stats = [
+    {num:totalEstHours, unit:'hrs', lbl:'estimated noise time, past year'},
+    {num:totalEvents.toLocaleString(), unit:'', lbl:'loud moments counted by hand, past year'},
+    {num:avgEstMinutesPerDay, unit:'min', lbl:'estimated noisy minutes per day'},
+    {num:avgPercent+'%', unit:'', lbl:'of watched time spent loud'},
+  ];
+  stats.forEach(s=>{
+    const el = document.createElement('div');
+    el.className='stat';
+    el.innerHTML = `<div class="num">${s.num}${s.unit?` <small>${s.unit}</small>`:''}</div><div class="lbl">${s.lbl}</div>`;
+    statStrip.appendChild(el);
+  });
+
+  const loudestInfo = findMaxDays(pastYear, d=>d.dbSource);
+  const longestInfo = findMaxDays(pastYear, d=>d.longest);
+  const busiestInfo = findMaxDays(pastYear, d=>d.percent);
+
+  /* ---- Gauge ---- */
+  (function drawGauge(){
+    const svg = document.getElementById('gaugeSvg');
+    const ns = "http://www.w3.org/2000/svg";
+    const cx=140, cy=150, r=110;
+    const minV=30, maxV=120;
+    const value = loudestInfo.max || minV;
+    function angleFor(v){ return Math.PI*(1-(v-minV)/(maxV-minV)); }
+    function point(angle, radius){ return [cx + radius*Math.cos(angle), cy - radius*Math.sin(angle)]; }
+    [{from:minV,to:70,color:'#3a4160'},{from:70,to:95,color:AMBER},{from:95,to:maxV,color:RED}].forEach(seg=>{
+      const a0=angleFor(seg.from), a1=angleFor(seg.to);
+      const [x0,y0]=point(a0,r), [x1,y1]=point(a1,r);
+      const path=document.createElementNS(ns,'path');
+      path.setAttribute('d',`M ${x0} ${y0} A ${r} ${r} 0 0 1 ${x1} ${y1}`);
+      path.setAttribute('stroke',seg.color); path.setAttribute('stroke-width','16'); path.setAttribute('fill','none');
+      svg.appendChild(path);
+    });
+    for(let v=minV; v<=maxV; v+=10){
+      const a=angleFor(v);
+      const [x0,y0]=point(a,r+13), [x1,y1]=point(a,r+3);
+      const tick=document.createElementNS(ns,'line');
+      tick.setAttribute('x1',x0);tick.setAttribute('y1',y0);tick.setAttribute('x2',x1);tick.setAttribute('y2',y1);
+      tick.setAttribute('stroke','#8b93a8'); tick.setAttribute('stroke-width','1.5');
+      svg.appendChild(tick);
+    }
+    const needle=document.createElementNS(ns,'line');
+    needle.setAttribute('x1',cx);needle.setAttribute('y1',cy);needle.setAttribute('x2',cx);needle.setAttribute('y2',cy);
+    needle.setAttribute('stroke',PAPER);needle.setAttribute('stroke-width','3');needle.setAttribute('stroke-linecap','round');
+    svg.appendChild(needle);
+    const hub=document.createElementNS(ns,'circle');
+    hub.setAttribute('cx',cx);hub.setAttribute('cy',cy);hub.setAttribute('r','6');hub.setAttribute('fill',PAPER);
+    svg.appendChild(hub);
+    let start=null;
+    function animate(ts){
+      if(!start) start=ts;
+      const t=Math.min(1,(ts-start)/1100);
+      const eased=1-Math.pow(1-t,3);
+      const a=angleFor(minV+eased*(value-minV));
+      const [ex,ey]=point(a,r-18);
+      needle.setAttribute('x2',ex); needle.setAttribute('y2',ey);
+      if(t<1) requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
+    const lo=document.createElementNS(ns,'text');
+    lo.setAttribute('x',cx-r-6);lo.setAttribute('y',cy+18);lo.setAttribute('fill','#8b93a8');
+    lo.setAttribute('font-size','11');lo.setAttribute('font-family','Space Mono, monospace');lo.textContent=minV;
+    svg.appendChild(lo);
+    const hi=document.createElementNS(ns,'text');
+    hi.setAttribute('x',cx+r-10);hi.setAttribute('y',cy+18);hi.setAttribute('fill','#8b93a8');
+    hi.setAttribute('font-size','11');hi.setAttribute('font-family','Space Mono, monospace');hi.textContent=maxV;
+    svg.appendChild(hi);
+
+    document.getElementById('gaugeReadingText').innerHTML = `${loudestInfo.max}<span> dB at the source</span>`;
+    const caption = loudestInfo.days.length > 1
+      ? `Reached on ${loudestInfo.days.length} different days: ${dateList(loudestInfo.days)}`
+      : `Recorded ${dateList(loudestInfo.days)}`;
+    document.getElementById('gaugeCaptionText').textContent = caption + ' \u00b7 about as loud as a jackhammer';
+  })();
+
+  /* ---- Timeline chart ---- */
+  new Chart(document.getElementById('timelineChart'), {
+    type:'line',
+    data:{
+      labels: pastYear.map(d=>d.date),
+      datasets:[{
+        label:'Estimated % of day loud',
+        data: pastYear.map(d=>d.percent),
+        borderColor: AMBER, backgroundColor: 'rgba(255,182,39,0.12)',
+        borderWidth:1.6, pointRadius:0, pointHoverRadius:5, pointHoverBackgroundColor:RED,
+        fill:true, tension:0.15,
+      }]
+    },
+    options:{
+      responsive:true, interaction:{mode:'index', intersect:false},
+      plugins:{ legend:{display:false},
+        tooltip:{ backgroundColor:'#20263a', borderColor:'#2a3049', borderWidth:1, titleColor:PAPER, bodyColor:'#c7ccd9', padding:10,
+          callbacks:{ label:function(ctx){
+            const d = pastYear[ctx.dataIndex];
+            const lines = [`Est. ${d.percent}% of the day loud (~${d.estMinutes} min)`];
+            if(d.events) lines.push(`${d.events} loud moments caught on camera`);
+            if(d.loudest) lines.push(`Loudest: ${d.loudest} dB (${d.dbSource} dB at source)`);
+            return lines;
+          } } } },
+      scales:{
+        x:{ grid:{color:GRID}, ticks:{ maxTicksLimit:8, color:'#8b93a8', font:{family:"'Space Mono', monospace", size:10} } },
+        y:{ grid:{color:GRID}, ticks:{ color:'#8b93a8', callback:v=>v+'%' }, title:{display:true,text:'Est. % of day loud', color:'#8b93a8'} }
+      }
+    }
+  });
+
+  /* ---- Weekday (all-time) ---- */
+  const weekday = wdOrder.map(day=>{
+    const rows = daily.filter(d=>d.dow===day);
+    return { day, percent: fmt1(avg(rows, d=>d.percent)), estMinutes: fmt1(avg(rows, d=>d.estMinutes)), events: fmt1(avg(rows, d=>d.events)) };
+  });
+  const wdColors = wdOrder.map(d => (d==='Friday'||d==='Saturday') ? RED : '#3a4160');
+
+  new Chart(document.getElementById('weekdayChart'), {
+    type:'bar',
+    data:{ labels: weekday.map(d=>d.day.slice(0,3)), datasets:[{ label:'Average % of day loud', data: weekday.map(d=>d.percent), backgroundColor: wdColors, borderRadius:6, maxBarThickness:46 }] },
+    options:{ responsive:true, plugins:{legend:{display:false}, title:{display:true, text:'Average noise, by day of week', color:PAPER, font:{family:"'Barlow Condensed', sans-serif", size:16, weight:'700'}}},
+      scales:{ x:{grid:{display:false}, ticks:{color:'#8b93a8'}}, y:{grid:{color:GRID}, ticks:{color:'#8b93a8', callback:v=>v+'%'}} } }
+  });
+
+  new Chart(document.getElementById('weekdayEventsChart'), {
+    type:'bar',
+    data:{ labels: weekday.map(d=>d.day.slice(0,3)), datasets:[{ label:'Average loud moments', data: weekday.map(d=>d.events), backgroundColor: wdOrder.map(d => (d==='Friday'||d==='Saturday') ? AMBER : '#3a4160'), borderRadius:6, maxBarThickness:46 }] },
+    options:{ responsive:true, plugins:{legend:{display:false}, title:{display:true, text:'Average loud moments, by day', color:PAPER, font:{family:"'Barlow Condensed', sans-serif", size:16, weight:'700'}}},
+      scales:{ x:{grid:{display:false}, ticks:{color:'#8b93a8'}}, y:{grid:{color:GRID}, ticks:{color:'#8b93a8'}} } }
+  });
+
+  (function(){
+    const sorted = [...weekday].sort((a,b)=>b.percent-a.percent);
+    const top = sorted[0], second = sorted[1], quiet = sorted[sorted.length-1];
+    document.getElementById('weekdayCopy').innerHTML =
+      `<strong>${top.day}</strong> and <strong>${second.day}</strong> are the loudest days on the street, with cars making noise about <strong>${Math.max(top.percent,second.percent)}%</strong> of the day. <strong>${quiet.day}</strong> is the calmest, at just <strong>${quiet.percent}%</strong>.`;
+  })();
+
+  /* ---- Monthly (all-time) ---- */
+  const monthKeys = [...new Set(daily.map(d=>d.iso.slice(0,7)))].sort();
+  const monthly = monthKeys.map(key=>{
+    const rows = daily.filter(d=>d.iso.slice(0,7)===key);
+    const [y,m] = key.split('-');
+    const label = new Date(Number(y), Number(m)-1, 1).toLocaleDateString('en-US',{month:'short', year:'numeric'});
+    return { label, percent: fmt1(avg(rows, d=>d.percent)), estMinutes: fmt1(avg(rows, d=>d.estMinutes)), events: Math.round(sum(rows, d=>d.events)), days: rows.length };
+  });
+
+  new Chart(document.getElementById('monthlyChart'), {
+    type:'bar',
+    data:{ labels: monthly.map(d=>d.label), datasets:[{ label:'Average % of day loud', data: monthly.map(d=>d.percent), backgroundColor: monthly.map(d=>d.percent >= 7.5 ? RED : (d.percent>=6 ? AMBER : '#3a4160')), borderRadius:6 }] },
+    options:{ responsive:true, plugins:{legend:{display:false},
+      tooltip:{ callbacks:{ label: ctx => { const m = monthly[ctx.dataIndex]; return [`Est. ${m.percent}% of the day, on average`, `~${Math.round(m.estMinutes)} min/day estimated`, `${m.events} loud moments logged that month`, `(${m.days} days watched)`]; } } } },
+      scales:{ x:{grid:{display:false}, ticks:{color:'#8b93a8', maxRotation:45, minRotation:45}}, y:{grid:{color:GRID}, ticks:{color:'#8b93a8', callback:v=>v+'%'}} } }
+  });
+
+  (function(){
+    const sorted = [...monthly].sort((a,b)=>b.percent-a.percent);
+    const loudest = sorted[0], quietest = sorted[sorted.length-1];
+    const half = Math.floor(monthly.length/2) || 1;
+    const first = monthly.slice(0, half).reduce((s,m)=>s+m.percent,0)/half;
+    const last = monthly.slice(-half).reduce((s,m)=>s+m.percent,0)/half;
+    const trendWord = last > first ? 'gotten louder' : 'gotten quieter';
+    document.getElementById('monthlyCopy').innerHTML =
+      `The street has slowly <strong>${trendWord}</strong> since I started logging. <strong>${loudest.label}</strong> was the loudest month, and <strong>${quietest.label}</strong> was the quietest. The earlier half of the log averaged <strong>${first.toFixed(1)}%</strong> loud; the more recent half averaged <strong>${last.toFixed(1)}%</strong>.`;
+  })();
+
+  /* ---- Tickets: three cards, bonus clip folded into "busiest" ---- */
+  (function(){
+    const container = document.getElementById('ticketsContainer');
+    const loudestDates = dateList(loudestInfo.days);
+    const longestDates = dateList(longestInfo.days);
+    const busiestDates = dateList(busiestInfo.days);
+    const busiestDay = busiestInfo.days[busiestInfo.days.length-1];
+    const loudestSample = loudestInfo.days[loudestInfo.days.length-1];
+
+    const cards = [
+      { no:'001', stamp:'LOUDEST', title:'Loudest sound',
+        big:`${loudestInfo.max} <small>dB at source</small>`,
+        body:`The loudest car we measured in the past year${loudestInfo.days.length>1 ? `, tied across ${loudestInfo.days.length} days` : ''}. At the mic, it hit ${loudestSample.loudest} dB.`,
+        meta:[loudestDates, loudestInfo.days.length===1 ? loudestSample.dow : ''] },
+      { no:'002', stamp:'LONGEST', title:'Longest sound',
+        big:`${fmt1(longestInfo.max/60)} <small>minutes, one stretch</small>`,
+        body:`One noisy vehicle, or a string of them, kept the street loud for over ${Math.floor(longestInfo.max/60)} minutes straight.`,
+        meta:[longestDates, longestInfo.days.length===1 ? longestInfo.days[0].dow : ''] },
+      { no:'003', stamp:'BUSIEST', title:'Loudest day',
+        big:`${fmt1(busiestInfo.max)} <small>% of the watched hour</small>`,
+        body:`${busiestDay.events ? busiestDay.events + ' separate moments' : 'Traffic noise'} filled this hour, the record for the systematic log. A stray daytime clip caught <strong>${BONUS_CLIP.percent}%</strong>, worse still &mdash; <a href="${BONUS_CLIP.url}" target="_blank" rel="noopener">watch it</a>.`,
+        meta:[busiestDates, busiestInfo.days.length===1 ? busiestDay.dow : ''] },
+    ];
+    container.innerHTML = cards.map(c => `
+      <div class="ticket">
+        <div class="ticket-no"><span>CITATION No. ${c.no}</span><span class="stamp">${c.stamp}</span></div>
+        <h3>${c.title}</h3>
+        <div class="big">${c.big}</div>
+        <p>${c.body}</p>
+        <div class="meta"><span>${c.meta[0]}</span><span>${c.meta[1]}</span></div>
+      </div>
+    `).join('');
+  })();
+}
+
+/* ==================== POLICE DATA ==================== */
+function renderPolice(calls){
+  const total = calls.length;
+  const responded = calls.filter(c=>c.responded);
+  const found = calls.filter(c=>c.foundSomeone);
+  const pctResponded = fmt1(responded.length/total*100);
+  const avgResponseHours = fmt1(avg(responded, c=>c.responseSec)/3600);
+  const overheard = sum(calls, c=>c.noisesHold+c.noisesCall);
+  const audibleDuringCall = calls.filter(c=>(c.noisesHold+c.noisesCall)>0).length;
+  const first = calls[0], last = calls[calls.length-1];
+
+  document.getElementById('policeCopy').innerHTML =
+    `Since ${first.date}, I've called Seattle police's non-emergency line ${total} times to report the noise. ` +
+    `An officer has responded to <strong>${responded.length} of ${total}</strong> calls (${pctResponded}%). ` +
+    `They have found the vehicle <strong>${found.length}</strong> times.`;
+
+  const scorecard = document.getElementById('policeScorecard');
+  const stats = [
+    {num:total, unit:'', lbl:'calls placed'},
+    {num:pctResponded+'%', unit:'', lbl:'got any response at all'},
+    {num:found.length, unit:'', lbl:'times they found the vehicle', zero:found.length===0},
+    {num:avgResponseHours, unit:'hrs', lbl:'average time to respond, when they do'},
+  ];
+  scorecard.innerHTML = stats.map(s=>`
+    <div class="stat">
+      <div class="num${s.zero?' zero':''}">${s.num}${s.unit?` <small>${s.unit}</small>`:''}</div>
+      <div class="lbl">${s.lbl}</div>
+    </div>
+  `).join('');
+
+  document.getElementById('policeCopy2').innerHTML =
+    `In ${audibleDuringCall} of those ${total} calls, another loud vehicle passed by while I was on hold or already describing the last one &mdash; ${overheard} of them in total. ` +
+    `The fastest response ever came in under half an hour; the slowest took almost 19.`;
+}
+
+/* ==================== LOAD & GO ==================== */
+Promise.allSettled([
+  fetch('noise-data.csv').then(r=>{ if(!r.ok) throw new Error(`HTTP ${r.status}`); return r.text(); }),
+  fetch('police-data.csv').then(r=>{ if(!r.ok) throw new Error(`HTTP ${r.status}`); return r.text(); }),
+]).then(([noiseResult, policeResult])=>{
+  if(noiseResult.status === 'fulfilled'){
+    try{ renderNoise(parseNoiseCSV(noiseResult.value)); }
+    catch(e){ showLoadError('noise-data.csv', e.message); }
+  } else {
+    showLoadError('noise-data.csv', noiseResult.reason.message);
+  }
+  if(policeResult.status === 'fulfilled'){
+    try{ renderPolice(parsePoliceCSV(policeResult.value)); }
+    catch(e){ showLoadError('police-data.csv', e.message); }
+  } else {
+    showLoadError('police-data.csv', policeResult.reason.message);
+  }
+});
+</script>
+
+</body>
+</html>
